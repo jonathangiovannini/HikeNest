@@ -1,0 +1,50 @@
+@import "tailwindcss";
+html, body{
+    overscroll-behavior: none;
+    font-family: "Roboto", Helvetica, sans-serif;
+    background-color: var(--color-mine-shaft-50);
+}
+.navbar-item::after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    background-color: black;
+    width: 0;
+    transition: width 0.5s ease-out;
+}
+
+.navbar-item:hover::after {
+    width: 100%;
+}
+@theme {
+    --color-mine-shaft-50: #f0f0f3;
+    --color-mine-shaft-100: #e7e7e7;
+    --color-mine-shaft-200: #d1d1d1;
+    --color-mine-shaft-300: #b0b0b0;
+    --color-mine-shaft-400: #888888;
+    --color-mine-shaft-500: #6d6d6d;
+    --color-mine-shaft-600: #5d5d5d;
+    --color-mine-shaft-700: #4f4f4f;
+    --color-mine-shaft-800: #454545;
+    --color-mine-shaft-900: #3d3d3d;
+    --color-mine-shaft-950: #2b2b2b;
+    --radius-buttons: 4rem;
+    --animate-slideFadeIn: slideFadeIn 0.5s ease forwards;
+    @keyframes slideFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px); /* Parte 20px più in basso */
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0); /* Arriva nella posizione originale */
+        }
+    }
+
+    --background-image-sfondo: url('/images/Sfondo.jpg');
+}
+
+
