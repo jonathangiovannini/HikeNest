@@ -21,13 +21,13 @@ const Navbar = () => {
     }
 
     return (
-        <nav className = "grid grid-cols-2 md:grid-cols-3 content-center w-full bg-mine-shaft-50  h-24 relative">
+        <nav className = "grid grid-cols-2 lg:grid-cols-3 content-center w-full bg-mine-shaft-50  h-24 relative">
             <div className = "w-24 h-24 p-4 flex justify-center items-center justify-self-start ml-4">
                 <Link to="/">
                     <img src="/images/Logo.png" alt="logo-hikenest" />
                 </Link>
             </div>
-            <div className = "hidden md:flex items-center justify-self-center w-full justify-center">
+            <div className = "hidden lg:flex items-center justify-self-center w-full justify-center">
                 <div className = "flex justify-between items-center w-full max-w-lg lg:max-w-2xl xl:max-w-4xl transition-all duration-300">
                     <Link to="/" className = {`${linkStyle} navbar-item`}>Map</Link>
                     <Link to="/groups" className = {`${linkStyle} navbar-item`}>Groups</Link>
@@ -35,17 +35,17 @@ const Navbar = () => {
                     <Link to="/about" className = {`${linkStyle} navbar-item`}>About Us</Link>
                 </div>
             </div>
-            <div className = "hidden md:flex items-center gap-2 justify-self-end mr-4">
+            <div className = "hidden lg:flex items-center gap-2 justify-self-end mr-4">
                 <Link to="/login" className = {`${btnStyleDesk} border-mine-shaft-950 border`}>LOGIN</Link>
                 <Link to="/signup" className = {`${btnStyleDesk} bg-mine-shaft-950 text-mine-shaft-50`}>SIGN UP</Link>
             </div>
-            <div className = {`md:hidden justify-self-end w-24 h-24 flex items-center justify-center`}>
+            <div className = {`lg:hidden justify-self-end w-24 h-24 flex items-center justify-center`}>
                 <IconButton size={"large"} edge = "start" aria-label={"menu"} color = "inherit" onClick = {toggleMenu}>
                     <MenuIcon fontSize="large"></MenuIcon>
                 </IconButton>
             </div>
             <div 
-                className={`fixed inset-0 bg-black/50 z-40 md:hidden transition-opacity duration-300 ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+                className={`fixed inset-0 bg-black/50 z-40 md:hidden transition-opacity duration-300  ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
                 onClick={toggleMenu}
             />
             <div className={`fixed top-0 right-0 w-80 h-dvh transform-gpu bg-mine-shaft-50 flex flex-col items-center py-4 md:hidden z-50 transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
