@@ -24,7 +24,7 @@ function About(){
             role: 'Multi-Functional Developer',
             roleColor: '#2ecc71',
             description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Debitis porro, eaque corporis ex veritatis quaerat nostrum magni et itaque id.',
-            image: "images/goku.png"
+            image: "/images/goku.png"
         }
     ];
 
@@ -53,8 +53,8 @@ function About(){
         <>
             <Navbar />
             <section className = "grid grid-cols-1 w-full h-144 md:h-96 lg:h-72 items-center sezione-iniziale">
-                <div className = "absolute items-center w-full">
-                    <h1 className = "justify-self-center text-mine-shaft-950 text-6xl lg:text-8xl p-12 font-bold">Incontra il team di HikeNest</h1>
+                <div className = " items-center w-full">
+                    <h1 className = "justify-self-center text-mine-shaft-950 text-6xl lg:text-8xl p-12 font-bold text-shadow-sm text-shadow-mine-shaft-50">Incontra il team di HikeNest</h1>
                     <p className = "justify-self-center p-12 text-mine-shaft-950 text-xl">
                         Tre studenti appassionati dell'Università di Trento che credono che
                         l'escursionismo dovrebbe essere più accessibile, più sicuro e più
@@ -62,20 +62,35 @@ function About(){
                     </p>
                 </div>
             </section>
-            <section className = "flex flex-col lg:flex-row m-8 md:m-20 lg:m-24 gap-4">
+
+            <section className = "grid grid-cols-1 lg:grid-cols-3 m-8 lg:m-20  gap-8  border-t-mine-shaft-300">
                 {
                     teamMembers.map((member, index)=>(
                         <Card key = {index} {...member}/>
                     ))
                 }
             </section>
-            <section className = "grid grid-cols-1 content-center w-96 m-auto">
-                <div className = "text-center">
+            <div className="w-full max-w-5xl mx-auto my-16 px-8">
+                <hr className="border-t-2 border-dashed border-gray-300" />
+            </div>
+            <section className = "grid grid-cols-1 content-center w-10/12 md:w-3/4 rounded-large shadow-md bg-gray-50 ml-auto mr-auto mb-8 ">
+                <div className = "text-center mt-8">
                     <h2 className = "font-bold text-2xl">La Nostra Missione</h2>
-                    <p>Rendere l'escursionismo più sicuro, accessibile e connesso con tutti, ovunque</p>
+                    <p className = "p-4">Rendere l'escursionismo più sicuro, accessibile e connesso con tutti, ovunque</p>
                 </div>
-                <div className = "grid grid-cols-1 lg:grid-cols-3">
-
+                <div className = "grid grid-cols-1 lg:grid-cols-3 mt-8 mb-8 ">
+                    {missions.map((mission, index) => (
+                        <div key={index} className="flex flex-col items-center justify-start text-center flex-1 min-w-0 p-4">
+                            <div
+                                className="w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center text-white mb-4 shadow-md"
+                                style={{ backgroundColor: mission.color }}
+                            >
+                                <i className={`fa fa-${mission.icon} text-2xl md:text-3xl`} aria-hidden="true" />
+                            </div>
+                            <h3 className="text-2xl font-bold mb-2">{mission.title}</h3>
+                            <p className="text-gray-700 md:text-base p-4">{mission.description}</p>
+                        </div>
+                    ))}
                 </div>
             </section>
         </>

@@ -2,7 +2,7 @@ function Footer(){
     return (
         <>
             <footer className="bg-mine-shaft-50 h-16">
-                <div className="mx-auto max-w-7xl px-4 pb-8 sm:px-6 lg:px-8 ">
+                <div className="mx-auto max-w-7xl px-4 pb-8 sm:px-6 lg:px-8 mb-4">
                     <div className="mt-4 border-t border-gray-100 pt-8 sm:flex sm:items-center sm:justify-between dark:border-gray-800">
                         <ul className="flex flex-wrap justify-center gap-4 text-xs lg:justify-end">
                             <li>

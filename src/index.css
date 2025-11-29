@@ -58,6 +58,7 @@ html, body{
     --color-mine-shaft-900: #3d3d3d;
     --color-mine-shaft-950: #2b2b2b;
     --radius-buttons: 4rem;
+    --radius-large: 2rem;
     --animate-slideFadeIn-fast: slideFadeIn 0.6s ease-out 0.2s backwards;
     --animate-slideFadeIn-slow: slideFadeIn 0.6s ease-out 0.4s backwards;
 

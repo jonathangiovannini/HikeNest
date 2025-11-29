@@ -45,10 +45,10 @@ const Navbar = () => {
                 </IconButton>
             </div>
             <div 
-                className={`fixed inset-0 bg-black/50 z-40 md:hidden transition-opacity duration-300  ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+                className={`fixed inset-0 bg-black/50 z-40 lg:hidden transition-opacity duration-300  ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
                 onClick={toggleMenu}
             />
-            <div className={`fixed top-0 right-0 w-80 h-dvh transform-gpu bg-mine-shaft-50 flex flex-col items-center py-4 md:hidden z-50 transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+            <div className={`fixed top-0 right-0 w-80 h-dvh transform-gpu bg-mine-shaft-50 flex flex-col items-center py-4 lg:hidden z-50 transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
                 <div className="w-full flex justify-end pr-4 mb-4">
                     <IconButton onClick={toggleMenu} aria-label="close menu">
                         <CloseIcon fontSize="large" />
