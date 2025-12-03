@@ -18,6 +18,7 @@ const FormGruppo: React.FC<FormGruppoProps> = ({ isOpen, onClose }) => {
     const [category, setCategory] = useState('Info');
     //const [partenza, setPartenza] = useState('');
 
+
     return (
         <AnimatePresence>
             {isOpen && (

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useState} from "react";
 
 const inputTxtStyle = "w-full px-4 py-3 bg-white border border-mine-shaft-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-mine-shaft-950 focus:border-transparent transition-all";
 
@@ -13,13 +13,10 @@ function SignUp() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
+
     const handleSubmit = () => {
         if (password !== confirmPassword) {
             alert("Le password non corrispondono");
-            return;
-        }
-        if (firstName == "" || lastName == "" || username == "" || email == "") {
-            alert("Campi mancanti");
             return;
         }
         console.log("Sign up attempted with:", {
@@ -32,7 +29,7 @@ function SignUp() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center p-4 bg-mine-shaft-50">
+        <form className="min-h-screen flex items-center justify-center p-4 bg-mine-shaft-50">
             <div className="max-w-2xl w-full space-y-6">
                 <div className="text-center">
                     <a href="/" className="inline-block">
@@ -58,7 +55,6 @@ function SignUp() {
                             </label>
                             <input
                                 type="text"
-                                required
                                 value={firstName}
                                 onChange={(e) => setFirstName(e.target.value)}
                                 placeholder="Mario"
@@ -87,7 +83,6 @@ function SignUp() {
                         </label>
                         <input
                             type="text"
-                            required
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             placeholder="Il tuo username"
@@ -252,12 +247,12 @@ function SignUp() {
                         </label>
                     </div>
 
-                    <button
+                    <input
+                        type="button"
                         onClick={handleSubmit}
                         className="w-full py-3 px-4 bg-mine-shaft-950 text-white font-medium rounded-lg hover:bg-mine-shaft-800 transition-all duration-200 shadow-md hover:shadow-lg"
-                    >
-                        Crea account
-                    </button>
+                        value='Crea Account'
+                    />
                 </div>
 
                 <div className="relative">
@@ -271,7 +266,8 @@ function SignUp() {
                     </div>
                 </div>
 
-                <button className="w-full flex items-center justify-center gap-3 py-3 px-4 border-2 border-mine-shaft-200 rounded-lg text-sm font-medium hover:bg-mine-shaft-100 transition-all duration-200 bg-white">
+                <button
+                    className="w-full flex items-center justify-center gap-3 py-3 px-4 border-2 border-mine-shaft-200 rounded-lg text-sm font-medium hover:bg-mine-shaft-100 transition-all duration-200 bg-white">
                     <svg
                         className="w-5 h-5"
                         viewBox="0 0 48 48"
@@ -298,7 +294,7 @@ function SignUp() {
                         </g>
                         <defs>
                             <clipPath id="clip0_17_40">
-                                <rect width="48" height="48" fill="white" />
+                                <rect width="48" height="48" fill="white"/>
                             </clipPath>
                         </defs>
                     </svg>
@@ -315,7 +311,7 @@ function SignUp() {
                     </a>
                 </p>
             </div>
-        </div>
+        </form>
     );
 }
 

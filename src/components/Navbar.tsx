@@ -28,7 +28,7 @@ const Navbar = () => {
                 </Link>
             </div>
             <div className="hidden lg:flex items-center justify-self-center w-full justify-center">
-                <div className="flex justify-between items-center w-full max-w-lg lg:max-w-2xl xl:max-w-4xl transition-all duration-300">
+                <div className="flex justify-between items-center w-full max-w-lg lg:max-w-2xl xl:max-w-4xl transition-all gap-8 lg:gap-0 duration-300">
                     <Link to="/" className={`${linkStyle} navbar-item`}>Map</Link>
                     <Link to="/groups" className={`${linkStyle} navbar-item`}>Groups</Link>
                     <Link to="/my-hikes" className={`${linkStyle} navbar-item`}>My Hikes</Link>

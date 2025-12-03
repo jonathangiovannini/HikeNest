@@ -3,13 +3,16 @@ import { useState } from "react";
 const inputTxtStyle = "w-full px-4 py-3 bg-white border border-mine-shaft-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-mine-shaft-950 focus:border-transparent transition-all";
 
 function Login() {
+
+
+
+
     const [showPassword, setShowPassword] = useState(false);
-    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [rememberMe, setRememberMe] = useState(false);
 
     const handleSubmit = () => {
-        console.log("Login attempted with:", { username, password, rememberMe });
+        console.log("Login attempted with:", { password, rememberMe });
     };
 
     return (
@@ -37,9 +40,7 @@ function Login() {
                             Username
                         </label>
                         <input
-                            type="email"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
+                            type="text"
                             placeholder="MarioRossi"
                             className = {`${inputTxtStyle}`}
                         />
