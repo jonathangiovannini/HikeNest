@@ -7,7 +7,7 @@ function Home() {
             <Navbar />
             <div className="grid grid-cols-1 content-center w-full h-200 overflow-hidden relative">
                 <img
-                    src="/images/Sfondo.jpg"
+                    src="images/Sfondo.jpg"
                     alt="background-hikenest"
                     className="absolute w-full h-full object-cover object-center"
                 />
@@ -18,7 +18,7 @@ function Home() {
                         </p>
                     </div>
                     <div className="justify-self-center sm:h-48 sm:w-48 md:h-72 md:w-72 h-36 w-36 animate-slideFadeIn-slow">
-                        <img src="/images/Logo.png" alt="" />
+                        <img src="images/Logo.png" alt="" />
                     </div>
                 </div>
             </div>

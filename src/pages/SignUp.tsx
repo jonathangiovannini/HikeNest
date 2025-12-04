@@ -1,4 +1,5 @@
 import {useState} from "react";
+import { Link } from "react-router-dom";
 
 const inputTxtStyle = "w-full px-4 py-3 bg-white border border-mine-shaft-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-mine-shaft-950 focus:border-transparent transition-all";
 
@@ -32,13 +33,13 @@ function SignUp() {
         <form className="min-h-screen flex items-center justify-center p-4 bg-mine-shaft-50">
             <div className="max-w-2xl w-full space-y-6">
                 <div className="text-center">
-                    <a href="/" className="inline-block">
+                    <Link to="/" className="inline-block">
                         <img
-                            src="/images/Logo.png"
+                            src="images/Logo.png"
                             alt="logo-hikenest"
                             className="w-36 mx-auto mb-4"
                         />
-                    </a>
+                    </Link>
                     <h1 className="text-3xl font-bold text-mine-shaft-950 mb-2">
                         Crea il tuo account
                     </h1>
