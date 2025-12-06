@@ -6,6 +6,7 @@ import SendIcon from "@mui/icons-material/Send";
 import Footer from "../components/Footer.tsx";
 import Section from "../components/Section.tsx";
 import { motion } from "motion/react";
+import useDocumentTitle from "../hooks/useDocumentTitle.ts";
 
 const teamMembers: TeamMember[] = [
     {
@@ -64,6 +65,7 @@ const missions: Mission[] = [
 
 function About() {
 
+    useDocumentTitle('About Us - HikeNest');
 
     return (
         <>

@@ -34,6 +34,11 @@ html, body{
     animation: fadeInSlideUp 0.6s ease-out 0.2s backwards;
     will-change: transform, opacity;
 }
+
+.filter-radio{
+  width: 31%;
+}
+
 @keyframes slideFadeIn {
     from {
         opacity: 0;
@@ -43,43 +48,6 @@ html, body{
         opacity: 1;
         transform: translateY(0); /* Arriva nella posizione originale */
     }
-}
-
-.visually-hidden {
-  position: absolute;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  height: 1px; width: 1px;
-  margin: -1px; padding: 0; border: 0;
-}
-
-.star-rating {
-
-  &__star {
-    display: inline-block;
-    padding: 3px;
-    vertical-align: middle;
-    line-height: 1;
-    font-size: 1.5em;
-    color: #ABABAB;
-    transition: color .2s ease-out;
-
-    &:hover {
-      cursor: pointer;
-    }
-    
-    &.is-selected {
-      color: #FFD700;
-    }
-    
-    &.is-disabled:hover {
-      cursor: default;
-    }
-  }
-
-  &__checkbox {
-    @extend %visually-hidden;
-  }
 }
 
 @theme {
@@ -96,6 +64,7 @@ html, body{
     --color-mine-shaft-950: #2b2b2b;
     --radius-buttons: 4rem;
     --radius-large: 2rem;
+    --width-filter-radio: 31%;
     --animate-slideFadeIn-fast: slideFadeIn 0.6s ease-out 0.2s backwards;
     --animate-slideFadeIn-slow: slideFadeIn 0.6s ease-out 0.4s backwards;
 

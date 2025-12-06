@@ -9,6 +9,7 @@ import Separator from "../components/Separator.tsx";
 import CloseIcon from '@mui/icons-material/Close';
 import Slider from '@mui/material/Slider';
 import { Rating } from "@mui/material";
+import useDocumentTitle from "../hooks/useDocumentTitle.ts";
 
 
 const marks = [
@@ -32,6 +33,8 @@ const marks = [
 
 
 function Groups() {
+
+    useDocumentTitle('Gruppi - HikeNest');
 
     const [difficolta, setDifficolta] = useState('Facile');
     const [FormAperta, setForm] = useState(false);
@@ -110,11 +113,11 @@ function Groups() {
                     className={`fixed inset-0 bg-black/50 z-40 lg:hidden transition-opacity duration-300  ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
                     onClick={toggleMenu}
                 />
-                <div className={`fixed bottom-0 right-0 w-full transform-gpu bg-mine-shaft-50 flex flex-col items-center py-4 lg:hidden z-50 transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-y-0' : 'translate-y-full'} rounded-t-2xl`}>
+                <div className={`fixed bottom-0 right-0 w-full transform-gpu bg-mine-shaft-50 flex flex-col items-center py-4 lg:hidden z-50 transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-y-0' : 'translate-y-full'} rounded-t-4xl`}>
                     <div className="flex w-full justify-between align-center">
-                        <h2 className='text-2xl flex items-center pl-4'>Filtra Per</h2>
-                        <IconButton onClick={toggleMenu} aria-label="close menu">
-                            <CloseIcon fontSize="large" />
+                        <h2 className='text-2xl flex items-center ml-4'>Filtra Per</h2>
+                        <IconButton onClick={toggleMenu} aria-label="close menu" >
+                            <CloseIcon fontSize="large" className = "mr-4"/>
                         </IconButton>
                     </div>
                     <div className="w-11/12 flex flex-col text-mine-shaft-950">
@@ -123,7 +126,7 @@ function Groups() {
                         <label htmlFor="difficolta" className = "self-start">Esperienza Richiesta</label>
                         <div className = 'flex w-full justify-between'>
                             {['Bassa', 'Media', 'Alta'].map((opt) => (
-                                <label key={opt} className={`cursor-pointer w-1/4 h-12 flex items-center justify-center text-md  rounded-lg border  font-semibold transition-colors ${difficolta === opt ? 'bg-mine-shaft-950 text-white border-transparent' : 'bg-white text-gray-600 border-gray-300 hover:border-gray-400'}`}>
+                                <label key={opt} className={`cursor-pointer w-filter-radio h-12 flex items-center justify-center text-md  rounded-lg border  font-semibold transition-colors ${difficolta === opt ? 'bg-mine-shaft-950 text-white border-transparent' : 'bg-white text-gray-600 border-gray-300 hover:border-gray-400'}`}>
                                     <input
                                         type="radio"
                                         required
