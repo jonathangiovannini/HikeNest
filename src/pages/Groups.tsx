@@ -8,7 +8,6 @@ import IconButton from '@mui/material/IconButton';
 import Separator from "../components/Separator.tsx";
 import CloseIcon from '@mui/icons-material/Close';
 import Slider from '@mui/material/Slider';
-import { Rating } from "@mui/material";
 import useDocumentTitle from "../hooks/useDocumentTitle.ts";
 
 
@@ -80,11 +79,11 @@ function Groups() {
 
                 <div className='hidden lg:flex gap-8 ml-4 mr-4'>
                     <div>
-                        <label htmlFor="difficolta">Difficoltà: </label>
+                        <label htmlFor="difficolta">Livello Esperienza : </label>
                         <select name="difficolta" id="">
-                            <option value="facile">Facile</option>
+                            <option value="facile">Basso</option>
                             <option value="medio">Medio</option>
-                            <option value="difficile">Difficile</option>
+                            <option value="difficile">Alto</option>
                         </select>
                     </div>
                     <div>
@@ -96,12 +95,8 @@ function Groups() {
                         </select>
                     </div>
                     <div>
-                        <label htmlFor="valutazioni">Valutazioni: </label>
-                        <select name="valutazioni" id="">
-                            <option value="scarsa">Scarsa</option>
-                            <option value="buona">Buona</option>
-                            <option value="ottima">Ottima</option>
-                        </select>
+                         <label htmlFor="data" className = "">Data</label>
+                        <input type="data" placeholder="01/01/2025" className ='border border-mine-shaft-950 rounded-md h-10 pl-4 focus:outline-none focus:ring-2 focus:ring-mine-shaft-950 focus:border-transparent transition-all'/>
                     </div>
                 </div>
                 <div className={`lg:hidden w-16 h-16 flex items-center justify-center `}>
@@ -123,9 +118,9 @@ function Groups() {
                     <div className="w-11/12 flex flex-col text-mine-shaft-950">
                     </div>
                     <div className = 'w-11/12 flex flex-col justify-center items-center gap-y-3 mb-4'>
-                        <label htmlFor="difficolta" className = "self-start">Esperienza Richiesta</label>
+                        <label htmlFor="difficolta" className = "self-start">Livello Esperienza</label>
                         <div className = 'flex w-full justify-between'>
-                            {['Bassa', 'Media', 'Alta'].map((opt) => (
+                            {['Basso', 'Medio', 'Alto'].map((opt) => (
                                 <label key={opt} className={`cursor-pointer w-filter-radio h-12 flex items-center justify-center text-md  rounded-lg border  font-semibold transition-colors ${difficolta === opt ? 'bg-mine-shaft-950 text-white border-transparent' : 'bg-white text-gray-600 border-gray-300 hover:border-gray-400'}`}>
                                     <input
                                         type="radio"
@@ -152,8 +147,8 @@ function Groups() {
                             min={1}
                             max={15}
                         />
-                        <label htmlFor="valutazione" className = "self-start">Valutazione</label>
-                        <Rating name = "valutazione" sx={{ fontSize: 40 }}/>
+                        <label htmlFor="data" className = "self-start">Data</label>
+                        <input type="data" placeholder="01/01/2025" className = 'self-start border border-mine-shaft-950 rounded-md h-10 pl-4 focus:outline-none focus:ring-2 focus:ring-mine-shaft-950 focus:border-transparent transition-all'/>
                     </div>
                 </div>
             </div>

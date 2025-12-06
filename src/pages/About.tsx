@@ -20,7 +20,7 @@ const teamMembers: TeamMember[] = [
     },
     {
         name: "Alessandro Balasso",
-        role: "Lead Developer",
+        role: "Back-End Developer",
         roleColor: "#ff6b35",
         description:
             "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus nulla atque illo ducimus. Eos labore animi voluptates repellendus reprehenderit perferendis!",
@@ -29,7 +29,7 @@ const teamMembers: TeamMember[] = [
     },
     {
         name: "Nicolas Ciocozan",
-        role: "Multi-Functional Developer",
+        role: "Full Stack Developer",
         roleColor: "#2ecc71",
         description:
             "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Debitis porro, eaque corporis ex veritatis quaerat nostrum magni et itaque id.",

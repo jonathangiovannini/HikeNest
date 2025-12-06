@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import useDocumentTitle from "../hooks/useDocumentTitle";
-import SimpleFooter from "../components/SimpleFooter";
 
 const inputTxtStyle = "w-full px-4 py-3 bg-white border border-mine-shaft-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-mine-shaft-950 focus:border-transparent transition-all";
 
@@ -13,8 +12,6 @@ function SignUp() {
 
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -27,8 +24,6 @@ function SignUp() {
             return;
         }
         console.log("Sign up attempted with:", {
-            firstName,
-            lastName,
             username,
             email,
             password,
@@ -52,35 +47,6 @@ function SignUp() {
                     </div>
 
                     <form className="bg-white rounded-lg shadow-sm border border-mine-shaft-200 p-6 space-y-4">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label className="block text-sm font-medium text-mine-shaft-700 mb-2">
-                                    Nome
-                                </label>
-                                <input
-                                    type="text"
-                                    value={firstName}
-                                    onChange={(e) => setFirstName(e.target.value)}
-                                    placeholder="Mario"
-                                    className={`${inputTxtStyle}`}
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium text-mine-shaft-700 mb-2">
-                                    Cognome
-                                </label>
-                                <input
-                                    type="text"
-                                    required
-                                    value={lastName}
-                                    onChange={(e) => setLastName(e.target.value)}
-                                    placeholder="Rossi"
-                                    className={`${inputTxtStyle}`}
-                                />
-                            </div>
-                        </div>
-
                         <div>
                             <label className="block text-sm font-medium text-mine-shaft-700 mb-2">
                                 Username
@@ -316,7 +282,6 @@ function SignUp() {
                     </p>
                 </div>
             </div>
-            <SimpleFooter/>
         </>
     );
 }

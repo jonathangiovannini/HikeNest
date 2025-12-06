@@ -20,7 +20,7 @@ function Login() {
 
     return (
         <>
-            <div className="my-8 flex items-center justify-center p-4 bg-mine-shaft-50">
+            <div className="mt-8 flex items-center justify-center p-4 bg-mine-shaft-50">
                 <div className="max-w-md w-full space-y-6">
                     <div className="text-center">
                         <Link to="/" className="inline-block">
