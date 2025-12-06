@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 export interface TeamMember {
     name: string;
     role: string;
@@ -11,4 +13,10 @@ export interface Mission {
     title: string;
     description: string;
     color: string;
+}
+
+export interface StatsValue {
+    label: string,
+    value: string | number,
+    icon: ReactNode,
 }

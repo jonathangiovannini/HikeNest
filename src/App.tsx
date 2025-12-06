@@ -4,6 +4,7 @@ import Login from './pages/Login'
 import SignUp from './pages/SignUp'
 import Groups from './pages/Groups'
 import About from "./pages/About.tsx";
+import MyHikes from './pages/MyHikes.tsx'
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
             <Route path="/login" element={<Login />}/>
             <Route path="/signup" element={<SignUp />} />
             <Route path="/groups" element={<Groups />} />
-
+            <Route path="/my-hikes" element={<MyHikes/>}/>
         </Routes>
     </>
   )
