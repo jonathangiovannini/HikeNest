@@ -16,7 +16,20 @@ export interface Mission {
 }
 
 export interface StatsValue {
-    label: string,
-    value: string | number,
-    icon: ReactNode,
+    label: string;
+    value: string | number;
+    icon: ReactNode;
+}
+
+export interface User {
+    username: string;
+    mail: string;
+    password: string;
+    bio: string;
+}
+
+export interface AuthContextType {
+  user: User | null;
+  login: (userData: User) => void;
+  logout: () => void;
 }
