@@ -25,7 +25,7 @@ const statsValue: StatsValue[] = [
 const StatGrid = () => {
     return (
         <>
-        <div className = 'flex flex-col lg:mx-96'>
+        <div className = 'flex flex-col'>
             <h1>Le Mie Escursioni</h1>
             <div className = 'grid grid-cols-1 lg:grid-cols-3 justify-items-center gap-4'>
                 {statsValue.map((member, index) => (

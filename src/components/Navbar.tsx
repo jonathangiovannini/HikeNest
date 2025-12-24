@@ -23,7 +23,7 @@ const Navbar = () => {
     }
   
   
-    /*useEffect(() => {
+    useEffect(() => {
         const utenteFinto = {
             username: "123",           
             nome: "Mario Rossi",
@@ -38,7 +38,7 @@ const Navbar = () => {
         }
         
     }, []);
-    useEffect(() => {
+    /*useEffect(() => {
         logout();
         
     }, []);*/
@@ -60,7 +60,7 @@ const Navbar = () => {
             </div>
             {user ? (
                 <div className = 'hidden lg:flex items-center justify-self-end mr-4'>
-                    <Link to = "" className = 'rounded-full h-20 w-20 border border-mine-shaft-950 overflow-hidden'>
+                    <Link to = "/profile" className = 'rounded-full h-20 w-20 border border-mine-shaft-950 overflow-hidden'>
                         <img src="images/goku.png" alt="" className = 'object-cover'/>
                     </Link>
                 </div>
@@ -101,8 +101,8 @@ const Navbar = () => {
                     </Link>
                 </div>
                 {user ? (
-                    <div className = 'hidden lg:flex items-center justify-self-end mr-4'>
-                        <Link to = "" className = 'rounded-full h-20 w-20 border border-mine-shaft-950 overflow-hidden'>
+                    <div className = 'flex items-center mt-auto mb-8'>
+                        <Link to = "/profile" className = 'rounded-full h-32 w-32 border border-mine-shaft-950 overflow-hidden flex items-center justify-center'>
                             <img src="images/goku.png" alt="" className = 'object-cover'/>
                         </Link>
                     </div>
