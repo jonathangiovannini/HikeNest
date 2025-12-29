@@ -39,8 +39,8 @@ const Navbar = () => {
             </div>
             {user != null? (
                 <div className = 'hidden lg:flex items-center justify-self-end mr-4'>
-                    <Link to = "/profile" className = 'rounded-full h-20 w-20 border border-mine-shaft-950 overflow-hidden'>
-                        <img src="images/goku.png" alt="" className = 'object-cover'/>
+                    <Link to = "/profile" className = 'rounded-full h-18 w-18  overflow-hidden'>
+                        <img src="images/user.png" alt="" className = 'object-cover'/>
                     </Link>
                 </div>
             ) : (
@@ -82,7 +82,7 @@ const Navbar = () => {
                 {user != null ? (
                     <div className = 'flex items-center mt-auto mb-8'>
                         <Link to = "/profile" className = 'rounded-full h-32 w-32 border border-mine-shaft-950 overflow-hidden flex items-center justify-center'>
-                            <img src="images/goku.png" alt="" className = 'object-cover'/>
+                            <img src="images/user.png" alt="" className = 'object-cover'/>
                         </Link>
                     </div>
                 ) : (
