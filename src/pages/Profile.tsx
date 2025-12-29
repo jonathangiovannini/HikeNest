@@ -2,9 +2,16 @@ import Navbar from "../components/Navbar";
 import SimpleFooter from "../components/SimpleFooter";
 import StatGrid from "../components/StatGrid";
 import { useNavigate } from "react-router-dom";
+import useDocumentTitle from '../hooks/useDocumentTitle';
+import {useState} from 'react';
+import FormProfilo from '../components/FormProfilo';
 
 
 const Profile = () => {
+    useDocumentTitle('Profilo - HikeNest');
+    const [FormAperta, setForm] = useState(false);
+    
+
     const navigate = useNavigate();
     const handleLogout = () => {
         localStorage.clear();
@@ -28,13 +35,21 @@ const Profile = () => {
                         </div>
                     </div>
                 </div>
-                <button className='w-48 h-12 font-bold mt-6'>Modifica Profilo</button>
+                <button 
+                    className='w-48 h-12 font-bold mt-6 hover:underline hover:cursor-pointer'
+                    onClick={() => setForm(true)}
+                >Modifica Profilo
+                </button>
+                <FormProfilo
+                    isOpen={FormAperta}
+                    onClose={() => setForm(false)}
+                />
                 <div className='w-11/12 lg:w-3/4 mt-8'>
                     <StatGrid/>
                 </div>
                 <button
                     onClick={handleLogout}
-                    className="mt-8 px-4 py-2 w-36 h-12 bg-mine-shaft-950 text-white rounded hover:bg-mine-shaft-600"
+                    className="mt-8 px-4 py-2 w-36 h-12 bg-mine-shaft-950 text-white rounded hover:bg-mine-shaft-600 hover:cursor-pointer"
                 >
                     Esci
                 </button>
