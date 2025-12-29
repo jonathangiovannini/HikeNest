@@ -1,8 +1,15 @@
 import Navbar from "../components/Navbar";
 import SimpleFooter from "../components/SimpleFooter";
 import StatGrid from "../components/StatGrid";
+import { useNavigate } from "react-router-dom";
+
 
 const Profile = () => {
+    const navigate = useNavigate();
+    const handleLogout = () => {
+    localStorage.clear();
+    navigate("/");
+    };
 
     return(
         <>
@@ -26,7 +33,12 @@ const Profile = () => {
                     <StatGrid/>
                 </div>
             </div>
-            
+            <button
+            onClick={handleLogout}
+            className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+            >
+            Logout
+            </button>
             <SimpleFooter/>
         </>
     );

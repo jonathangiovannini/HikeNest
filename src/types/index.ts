@@ -30,6 +30,4 @@ export interface User {
 
 export interface AuthContextType {
   user: User | null;
-  login: (userData: User) => void;
-  logout: () => void;
 }

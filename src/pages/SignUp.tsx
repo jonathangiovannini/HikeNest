@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import useDocumentTitle from "../hooks/useDocumentTitle";
+import { useNavigate } from "react-router-dom";
 
 const inputTxtStyle = "w-full px-4 py-3 bg-white border border-mine-shaft-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-mine-shaft-950 focus:border-transparent transition-all";
 
 
 function SignUp() {
-
+    const navigate = useNavigate();
+    const apiUrl = import.meta.env.VITE_API_URL;
     useDocumentTitle('Sign Up - HikeNest');
 
 
@@ -18,16 +20,37 @@ function SignUp() {
     const [confirmPassword, setConfirmPassword] = useState("");
 
 
-    const handleSubmit = () => {
+    const handleSubmit = async() => {
         if (password !== confirmPassword) {
             alert("Le password non corrispondono");
             return;
         }
-        console.log("Sign up attempted with:", {
-            username,
-            email,
-            password,
+        try {
+            const response = await fetch(apiUrl + "/registrazione", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                mail: email,
+                password: password,
+                username: username
+            })
         });
+
+        if (!response.ok) {
+            const errData = await response.json();
+            throw new Error(errData.message || "Errore di login");
+        }
+
+        alert("Account creato con successo");
+        console.log("Registrazione riuscita!");
+        
+        navigate("/login");
+        } catch (err) {
+            console.error("Errore login:");
+            alert("err.message");
+        }
     };
 
     return (

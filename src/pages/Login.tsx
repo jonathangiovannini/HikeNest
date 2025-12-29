@@ -1,21 +1,58 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useDocumentTitle from "../hooks/useDocumentTitle";
 import SimpleFooter from "../components/SimpleFooter";
+
+
 
 const inputTxtStyle = "w-full px-4 py-3 bg-white border border-mine-shaft-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-mine-shaft-950 focus:border-transparent transition-all";
 
 function Login() {
-
+    const apiUrl = import.meta.env.VITE_API_URL;
+    const navigate = useNavigate();
     useDocumentTitle('Login - HikeNest');
 
 
     const [showPassword, setShowPassword] = useState(false);
     const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("");
     const [rememberMe, setRememberMe] = useState(false);
 
-    const handleSubmit = () => {
-        console.log("Login attempted with:", { password, rememberMe });
+    const handleSubmit = async () => {
+        
+        try {
+            const response = await fetch(apiUrl + "/autenticazione", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                mail: email,
+                password: password
+            })
+        });
+
+        if (!response.ok) {
+            const errData = await response.json();
+            throw new Error(errData.message || "Errore di login");
+        }
+
+        const data = await response.json();
+        
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("username", data.username);
+        localStorage.setItem("email", data.email);
+        localStorage.setItem("userId", data.id);
+        console.log(data.mail);
+
+        console.log("Login riuscito!", data);
+        
+        navigate("/");
+        } catch (err) {
+            console.error("Errore login:");
+            alert("err.message");
+        }
     };
 
     return (
@@ -37,11 +74,13 @@ function Login() {
                     <form className="bg-white rounded-lg shadow-sm border border-mine-shaft-200 p-6 space-y-4">
                         <div>
                             <label className="block text-sm font-medium text-mine-shaft-700 mb-2">
-                                Username
+                                Email
                             </label>
                             <input
                                 type="text"
-                                placeholder="MarioRossi"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="@email.com"
                                 className={`${inputTxtStyle}`}
                             />
                         </div>
@@ -120,12 +159,13 @@ function Login() {
                             </a>
                         </div>
 
-                        <button
-                            onClick={handleSubmit}
+                        <input type = "button"
                             className="w-full py-3 px-4 bg-mine-shaft-950 text-white font-medium rounded-lg hover:bg-mine-shaft-800 transition-all duration-200 shadow-md hover:shadow-lg"
-                        >
-                            Accedi
-                        </button>
+                            value="Login"
+                            onClick={handleSubmit}
+                        />
+                            
+                        
                     </form>
 
                     <div className="relative">
