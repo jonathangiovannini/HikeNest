@@ -45,25 +45,32 @@ export default function Ricerca({ onResultFound, onClear }: RicercaProps) {
   };
 
   return (
-    <div className="leaflet-top leaflet-right" style={{ pointerEvents: 'auto', zIndex: 1000 }}>
-       <div className="leaflet-control leaflet-bar" style={{ display: 'flex', padding: '5px', background: 'white' }}>
-        <form onSubmit={handleSearch} style={{ display: 'flex', alignItems: 'center' }}>
+    <div className="absolute inset-0 flex flex-col justify-end items-center lg:justify-start lg:items-end z-1000 pointer-events-none">
+       <div 
+            className="leaflet-control leaflet-bar border-none! shadow-none! pointer-events-auto w-11/12 lg:w-auto flex justify-center lg:justify-end mb-32 lg:mb-0 lg:mt-6 lg:mr-8" 
+            style={{ display: 'flex', background: 'transparent' }}
+        >
+        <form 
+            onSubmit={handleSearch} 
+            style={{ display: 'flex', alignItems: 'center' }} 
+            className='bg-mine-shaft-50 border border-mine-shaft-950 w-full lg:w-96 h-12 justify-evenly rounded-lg shadow-lg'
+        >
             <input 
                 type="text" 
                 value={query} 
                 onChange={(e) => setQuery(e.target.value)} 
                 placeholder="Cerca sentiero"
-                style={{ border: 'none', outline: 'none', width: '15rem', height: '2rem' }}
+                className = 'pl-3 text-sm w-full h-full text-mine-shaft-950 bg-transparent outline-none border-none focus:ring-0 rounded-l-lg'
             />
-             <button type="submit" style={{ cursor: 'pointer', border: 'none', background: 'white'}}></button>
+             <button type="submit" className="hidden"></button>
              
              {query && (
                <button 
                  type="button" 
                  onClick={handleClear}
-                 style={{ cursor: 'pointer', border: 'none', background: 'white', color: 'red', fontWeight: 'bold', marginLeft: '5px' }}
+                 className = 'text-mine-shaft-950 font-bold pr-4 hover:text-red-600 transition-colors'
                >
-                 ✕
+                 X
                </button>
              )}
         </form>

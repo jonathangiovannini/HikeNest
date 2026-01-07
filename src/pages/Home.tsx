@@ -14,7 +14,7 @@ function Home() {
             <Navbar />
             <div className="grid grid-cols-1 content-center w-full h-dvh overflow-hidden relative">
                 <img
-                    src="images/Sfondo.jpg"
+                    src="/images/Sfondo.jpg"
                     alt="background-hikenest"
                     className="absolute w-full h-full object-cover object-center"
                 />
@@ -25,7 +25,7 @@ function Home() {
                         </p>
                     </div>
                     <div className="justify-self-center sm:h-48 sm:w-48 md:h-72 md:w-72 h-36 w-36 animate-slideFadeIn-slow">
-                        <img src="images/Logo.png" alt="" />
+                        <img src="/images/Logo.png" alt="" />
                     </div>
                 </div>
                 <Link to = {isLogged ? '/groups' : '/login'} state = {!isLogged ? {from: "/groups"} : null} className = 'flex cursor-pointer w-48 h-16 items-center mx-auto rounded-buttons bg-mine-shaft-950 lg:hidden justify-between  relative animate-slideFadeIn-slow transition delay-100 duration-300 ease-in-out hover:translate-y-1'>

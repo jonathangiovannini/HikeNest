@@ -26,7 +26,7 @@ const Navbar = () => {
         <nav className="grid grid-cols-2 lg:grid-cols-3 content-center w-full bg-mine-shaft-50  h-24 relative ">
             <div className="w-24 h-24 p-4 flex justify-center items-center justify-self-start ml-4">
                 <Link to="/">
-                    <img src="images/Logo.png" alt="logo-hikenest" />
+                    <img src="/images/Logo.png" alt="logo-hikenest" />
                 </Link>
             </div>
             <div className="hidden lg:flex items-center justify-self-center w-full justify-center">
@@ -87,6 +87,7 @@ const Navbar = () => {
                     </div>
                 ) : (
                     <div className="flex flex-col gap-2 mt-auto mb-8">
+                        <button className = 'mb-8 text-lg text-mine-shaft-600 decoration underline'>Invia una Segnalazione</button>
                         <Link to="/login" className={`${btnStyleMob} border-mine-shaft-950 border w-56 `}>LOGIN</Link>
                         <Link to="/signup" className={`${btnStyleMob} bg-mine-shaft-950 text-mine-shaft-50 w-56 `}>SIGN UP</Link>
                     </div>
