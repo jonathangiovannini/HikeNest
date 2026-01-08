@@ -1,20 +1,48 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useMap } from 'react-leaflet';
 
 interface RicercaProps {
   onResultFound: (geojson: any) => void;
-  onClear: () => void; // Nuova funzione per pulire
+  onClear: () => void; 
+}
+
+interface Suggestion {
+  place_id: number;
+  display_name: string;
+  lat: string;
+  lon: string;
 }
 
 export default function Ricerca({ onResultFound, onClear }: RicercaProps) {
   const [query, setQuery] = useState('');
   const map = useMap();
+  const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
 
-  const handleSearch = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!query) return;
+  useEffect(() => {
+    const timer = setTimeout(async () => {
+      if (query.length > 2) {
+        try {
+          const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&addressdetails=1&limit=5`;
+          const response = await fetch(url);
+          const data = await response.json();
+          setSuggestions(data);
+        } catch (error) {
+          console.error("Errore autocomplete:", error);
+        }
+      } else {
+        setSuggestions([]); 
+      }
+    }, 500); 
 
-    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&polygon_geojson=1`;
+    return () => clearTimeout(timer);
+  }, [query]);
+
+  const searchPlace = async (searchText: string) => {
+    if (!searchText) return;
+
+    setSuggestions([]); 
+
+    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchText)}&polygon_geojson=1`;
 
     try {
       const response = await fetch(url);
@@ -28,7 +56,7 @@ export default function Ricerca({ onResultFound, onClear }: RicercaProps) {
         map.flyTo([lat, lon], 13);
 
         if (result.geojson) {
-            onResultFound(result.geojson); // Passiamo i dati al padre
+            onResultFound(result.geojson);
         }
       } else {
         alert('Nessun risultato trovato');
@@ -38,11 +66,23 @@ export default function Ricerca({ onResultFound, onClear }: RicercaProps) {
     }
   };
 
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault(); // Blocca il refresh della pagina
+    searchPlace(query); // Chiama la funzione pura usando il testo dell'input
+  };
+
   const handleClear = () => {
     setQuery('');      
     onClear();          
     map.setZoom(10);    
   };
+
+  const handleSelectSuggestion = (suggestion: Suggestion) => {
+    setQuery(suggestion.display_name); // Aggiorna l'input con il nome completo
+    setSuggestions([]); // Nascondi la lista
+    searchPlace(suggestion.display_name); // Lancia la ricerca vera per ottenere il GeoJSON/Poligono
+  };
+
 
   return (
     <div className="absolute inset-0 flex flex-col justify-end items-center lg:justify-start lg:items-end z-1000 pointer-events-none">
@@ -51,7 +91,7 @@ export default function Ricerca({ onResultFound, onClear }: RicercaProps) {
             style={{ display: 'flex', background: 'transparent' }}
         >
         <form 
-            onSubmit={handleSearch} 
+            onSubmit={handleSearchSubmit} 
             style={{ display: 'flex', alignItems: 'center' }} 
             className='bg-mine-shaft-50 border border-mine-shaft-950 w-full lg:w-96 h-12 justify-evenly rounded-lg shadow-lg'
         >
@@ -74,6 +114,20 @@ export default function Ricerca({ onResultFound, onClear }: RicercaProps) {
                </button>
              )}
         </form>
+        {suggestions.length > 0 && (
+          <ul className="absolute top-14 left-0 w-full bg-white border border-gray-300 rounded-lg shadow-xl overflow-hidden z-10">
+            {suggestions.map((suggestion) => (
+              <li 
+                key={suggestion.place_id}
+                onClick={() => handleSelectSuggestion(suggestion)}
+                className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm text-gray-800 border-b border-gray-100 last:border-none truncate"
+                title={suggestion.display_name} // Tooltip se il nome è troppo lungo
+              >
+                {suggestion.display_name}
+              </li>
+            ))}
+          </ul>
+        )}
        </div>
     </div>
   );

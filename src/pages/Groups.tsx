@@ -77,10 +77,10 @@ function Groups() {
 
                 />
 
-                <div className='hidden lg:flex gap-8 ml-4 mr-4'>
+                <div className='hidden lg:flex gap-8 ml-4 mr-4 items-center'>
                     <div>
                         <label htmlFor="difficolta">Livello Esperienza : </label>
-                        <select name="difficolta" id="">
+                        <select name="difficolta" id="" className = 'h-10 w-24 rounded-lg focus:outline-none focus:ring-2 focus:ring-mine-shaft-950 focus:border-transparent transition-all'>
                             <option value="facile">Basso</option>
                             <option value="medio">Medio</option>
                             <option value="difficile">Alto</option>
@@ -88,14 +88,14 @@ function Groups() {
                     </div>
                     <div>
                         <label htmlFor="lunghezza">Lunghezza: </label>
-                        <select name="lunghezza" id="">
+                        <select name="lunghezza" id="" className = 'h-10 w-24 rounded-lg focus:outline-none focus:ring-2 focus:ring-mine-shaft-950 focus:border-transparent transition-all'>
                             <option value="corto">1km - 5km</option>
                             <option value="medio">5km - 10km</option>
                             <option value="lungo">10km +</option>
                         </select>
                     </div>
                     <div>
-                         <label htmlFor="data" className = "">Data</label>
+                         <label htmlFor="data" className = "">Data: </label>
                         <input type="data" placeholder="01/01/2025" className ='border border-mine-shaft-950 rounded-md h-10 pl-4 focus:outline-none focus:ring-2 focus:ring-mine-shaft-950 focus:border-transparent transition-all'/>
                     </div>
                 </div>
