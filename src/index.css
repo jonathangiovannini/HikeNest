@@ -21,11 +21,13 @@ html, body{
 }
 
 .sezione-iniziale {
-    background: linear-gradient(rgba(0, 0, 0, 0), var(--color-mine-shaft-50)
-    ),
-    url("/images/SfondoTagliato.jpg") center/cover no-repeat;
+    background: 
+        linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)),
+        linear-gradient(rgba(0, 0, 0, 0), var(--color-mine-shaft-50)),
+        url("assets/images/community_cropped.jpg") center/cover no-repeat;
+    
     min-height: 50vh;
-    mask-image: linear-gradient(to bottom, black 83%, transparent 90%);
+    mask-image: linear-gradient(to bottom, black 83%, transparent 50vh);
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -10,8 +10,44 @@ import FormProfilo from '../components/FormProfilo';
 const Profile = () => {
     useDocumentTitle('Profilo - HikeNest');
     const [FormAperta, setForm] = useState(false);
-    
+    const apiUrl = import.meta.env.VITE_API_URL;
+    const idUtente = localStorage.getItem('userId');
+    const username = localStorage.getItem('username');
+    const [userData, setUserData] = useState({
+        bio: "",
+        nGruppi: 0,
+        kmTotali: 0,
+        percorsoPreferito: ""
+    });
+    const fetchProfilo = async () => {
+        try {
+                const response = await fetch(apiUrl + "/utenti/" + idUtente, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`
+                }
+                });
 
+                if(!response.ok){
+                    throw new Error("Errore nel caricamento del profilo");
+                }
+                const data = await response.json();
+                setUserData({
+                    bio: data.bio,
+                    nGruppi: data.nGruppi,
+                    kmTotali: data.kmTotali,
+                    percorsoPreferito: data.percorsoPreferito
+                });
+                localStorage.setItem("nGruppi", userData.nGruppi+"");
+                localStorage.setItem("kmTotali", userData.kmTotali+"");
+                localStorage.setItem("percorsoPreferito", userData.percorsoPreferito);
+
+        }catch (err){};
+    }
+    if (idUtente) {
+        fetchProfilo();
+    }
     const navigate = useNavigate();
     const handleLogout = () => {
         localStorage.clear();
@@ -30,8 +66,8 @@ const Profile = () => {
                     </div>
                     <div className='w-11/12 lg:w-3/4 lg:mt-0 mt-8'>
                         <div className='flex flex-col gap-4 justify-center lg:items-start items-center'>
-                            <h2 className='font-bold text-3xl'>Username</h2>
-                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Neque quos similique, voluptate eligendi aut sapiente assumenda quod non vel obcaecati dolores minus eveniet ea laudantium placeat consectetur veritatis unde alias nemo odit incidunt iste! Similique veritatis sapiente est labore delectus fuga voluptate possimus, tempora quam! Quasi, id sapiente? Aut, natus.</p>
+                            <h2 className='font-bold text-3xl'>{username}</h2>
+                            <p>{userData.bio}</p>
                         </div>
                     </div>
                 </div>

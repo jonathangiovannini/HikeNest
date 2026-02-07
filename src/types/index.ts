@@ -17,7 +17,7 @@ export interface Mission {
 
 export interface StatsValue {
     label: string;
-    value: string | number;
+    value: string | number | null;
     icon: ReactNode;
 }
 

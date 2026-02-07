@@ -36,7 +36,7 @@ function SignUp() {
                 password: password,
                 username: username
             })
-        });
+            });
 
         if (!response.ok) {
             const errData = await response.json();

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -10,10 +11,40 @@ interface FormProfiloProps {
 const wrapperInputTextStyle = "grid grid-cols-1";
 const inputTxtStyle = "w-full px-4 py-3 bg-white border border-mine-shaft-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-mine-shaft-950 focus:border-transparent transition-all";
 
-
-
 const FormGruppo: React.FC<FormProfiloProps> = ({ isOpen, onClose }) => {
+    
+const [bio, setBio] = useState("");
+const [newUsername, setNewUsername] = useState("");
+    
+const handleSubmit = async() => {
+    console.log(localStorage.getItem('token'));
 
+    const apiUrl = import.meta.env.VITE_API_URL;
+    try {
+        const response = await fetch(apiUrl + "/utenti", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+            bio: bio,
+            username: newUsername
+        })
+        });
+
+    if (!response.ok) {
+        const errData = await response.json();
+        throw new Error(errData.message || "Errore nella modifica del profilo");
+    }
+
+    alert("Account Aggiornato con successo");
+    
+    } catch (err) {
+        console.error("Errore Modifica:");
+        alert("err.message");
+    }
+    };
 
     return (
         <AnimatePresence>
@@ -58,19 +89,25 @@ const FormGruppo: React.FC<FormProfiloProps> = ({ isOpen, onClose }) => {
                                         name="partenza"
                                         id="form-gruppo-partenza"
                                         className = {`${inputTxtStyle}`}
+                                        value={newUsername}
+                                        onChange={(e) => setNewUsername(e.target.value)}
                                     />
                                 </div>
                                 <div className = {`${wrapperInputTextStyle}`}>
-                                    <label htmlFor="descrizione">Descrizione</label>
-                                    <textarea name="descrizione" id="" 
+                                    <label htmlFor="Biografia">Biografia</label>
+                                    <textarea name="Biografia" id="" 
                                         className = {`${inputTxtStyle} resize-none `}
+                                        value={bio}
+                                        onChange={(e) => setBio(e.target.value)}
                                     ></textarea>
                                 </div>
-                                <button
+                                <input
+                                    type="button"
+                                    value="Modifica Profilo"
+                                    onClick={handleSubmit}
                                     className="w-full mt-12 py-3 px-4 bg-mine-shaft-950 text-white font-medium rounded-lg hover:bg-mine-shaft-800 transition-all duration-200 shadow-md hover:shadow-lg"
-                                >
-                                    Modifica Profilo
-                                </button>
+                                />
+                                
                             </form>
                         </div>
                     </motion.div>

@@ -1,159 +1,238 @@
+import { useState, useEffect } from 'react';
 import Navbar from "../components/Navbar.tsx";
 import Footer from "../components/Footer.tsx";
 import Section from "../components/Section.tsx";
 import FormGruppo from "../components/FormGruppo.tsx";
-import { useState } from 'react'
+import Separator from "../components/Separator.tsx";
+import useDocumentTitle from "../hooks/useDocumentTitle.ts";
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import IconButton from '@mui/material/IconButton';
-import Separator from "../components/Separator.tsx";
 import CloseIcon from '@mui/icons-material/Close';
-import Slider from '@mui/material/Slider';
-import useDocumentTitle from "../hooks/useDocumentTitle.ts";
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import TerrainIcon from '@mui/icons-material/Terrain';
+import DettagliGruppo from '../components/DettagliGruppo.tsx';
 
 
-const marks = [
-  {
-    value: 2,
-    label: '2km',
-  },
-  {
-    value: 5,
-    label: '5km',
-  },
-  {
-    value: 10,
-    label: '10km',
-  },
-  {
-    value: 15,
-    label: '15km',
-  },
-];
-
+interface Gruppo {
+    self: string;
+    id: string;
+    nome: string;
+    idPercorso: string;
+    esperienza: string;
+    data: string;
+    descrizione: string;
+}
 
 function Groups() {
-
     useDocumentTitle('Gruppi - HikeNest');
+    
+    const [selectedGroupId, setSelectedGroupId] = useState<string | null>(null);
 
-    const [difficolta, setDifficolta] = useState('Facile');
+    const [gruppi, setGruppi] = useState<Gruppo[]>([]);
+    const [loading, setLoading] = useState(true);
+
     const [FormAperta, setForm] = useState(false);
     const [isMenuOpen, setMenuOpen] = useState(false);
-    const toggleMenu = () => {
-        setMenuOpen(!isMenuOpen);
-    }
+    const [searchTerm, setSearchTerm] = useState("");
+    const [difficoltaFiltro, setDifficoltaFiltro] = useState('Tutti');
+    const [dataFiltro, setDataFiltro] = useState("");
+
+    const apiUrl = import.meta.env.VITE_API_URL;
+
+    useEffect(() => {
+        const fetchGruppi = async () => {
+            try {
+                const response = await fetch(`${apiUrl}/gruppi`,{
+                    method: "GET",
+                    headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`
+                }
+                });
+                if (!response.ok) throw new Error("Errore API");
+                const data = await response.json();
+                setGruppi(data);
+            } catch (err) {
+                console.error("Errore nel caricamento:", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchGruppi();
+    }, [apiUrl]);
+
+    const toggleMenu = () => setMenuOpen(!isMenuOpen);
+
+    const gruppiFiltrati = gruppi.filter(g => {
+        g.id = g.self.split('/').pop() || "";
+        const matchNome = g.nome.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchData = dataFiltro === "" || g.data.startsWith(dataFiltro);
+        const matchDifficolta = difficoltaFiltro === 'Tutti' || g.esperienza === difficoltaFiltro;
+        return matchNome && matchDifficolta && matchData;
+    });
 
     return (
-        <>
+        <div className="min-h-screen bg-white">
             <Navbar />
+            
             <Section>
-                <h1 className="justify-self-center text-mine-shaft-950 text-6xl lg:text-8xl p-12 font-bold text-shadow-sm text-shadow-mine-shaft-50">
+                <h1 className="text-center text-mine-shaft-950 text-6xl lg:text-8xl p-12 font-bold ">
                     Trova la tua comunità
                 </h1>
-                <p className="justify-self-center p-8 text-mine-shaft-950 text-xl">
+                <p className="text-center p-8 text-mine-shaft-950 text-xl max-w-7xl mx-auto font-bold">
                     Entra in contatto con altri escursionisti, unisciti ad avventure di
-                    gruppo e scopri nuovi sentieri insieme. La montagna chiama, e tu non
-                    se solo
+                    gruppo e scopri nuovi sentieri insieme.
                 </p>
             </Section>
-            <div className="w-full flex justify-center ">
+
+            <div className="w-full flex justify-center mb-4">
                 <button
-                    className="text-mine-shaft-50 font-bold bg-mine-shaft-950 w-48 h-16 rounded-buttons cursor-pointer transition delay-100 duration-300 ease-in-out hover:translate-y-1"
+                    className="text-mine-shaft-50 font-bold bg-mine-shaft-950 w-64 h-16 rounded-lg cursor-pointer transition transform hover:scale-105 active:scale-95 shadow-xl"
                     onClick={() => setForm(true)}
                 >
-                    CREA UN GRUPPO
+                    + CREA UN GRUPPO
                 </button>
             </div>
-            <FormGruppo
-                isOpen={FormAperta}
-                onClose={() => setForm(false)}
+
+            <FormGruppo isOpen={FormAperta} onClose={() => setForm(false)} />
+            <DettagliGruppo
+                groupId={selectedGroupId} 
+                onClose={() => setSelectedGroupId(null)} 
             />
+            
             <Separator />
-            <div className="w-11/12  h-16 md:h-20 lg:h-24  mt-8  bg-gray-50 rounded-lg mx-auto shadow-xl flex justify-between items-center">
 
-                <input
-                    type="text"
-                    className='h-10 lg:h-12 w-7/12 pl-2 ml-8 rounded-lg focus:outline-none focus:ring-2 focus:ring-mine-shaft-950 focus:border-transparent transition-all'
-                    placeholder="Cerca"
+            <div className="w-11/12 mt-8 bg-gray-50 rounded-xl mx-auto shadow-lg p-4 lg:p-6">
+                <div className="flex flex-col lg:flex-row justify-between items-center gap-4">
+                    <input
+                        type="text"
+                        className='h-12 w-full lg:w-1/3 px-4 rounded-lg border border-gray-200 focus:ring-2 focus:ring-mine-shaft-950 outline-none transition-all'
+                        placeholder="Cerca un gruppo..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
 
-                />
-
-                <div className='hidden lg:flex gap-8 ml-4 mr-4 items-center'>
-                    <div>
-                        <label htmlFor="difficolta">Livello Esperienza : </label>
-                        <select name="difficolta" id="" className = 'h-10 w-24 rounded-lg focus:outline-none focus:ring-2 focus:ring-mine-shaft-950 focus:border-transparent transition-all'>
-                            <option value="facile">Basso</option>
-                            <option value="medio">Medio</option>
-                            <option value="difficile">Alto</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label htmlFor="lunghezza">Lunghezza: </label>
-                        <select name="lunghezza" id="" className = 'h-10 w-24 rounded-lg focus:outline-none focus:ring-2 focus:ring-mine-shaft-950 focus:border-transparent transition-all'>
-                            <option value="corto">1km - 5km</option>
-                            <option value="medio">5km - 10km</option>
-                            <option value="lungo">10km +</option>
-                        </select>
-                    </div>
-                    <div>
-                         <label htmlFor="data" className = "">Data: </label>
-                        <input type="data" placeholder="01/01/2025" className ='border border-mine-shaft-950 rounded-md h-10 pl-4 focus:outline-none focus:ring-2 focus:ring-mine-shaft-950 focus:border-transparent transition-all'/>
-                    </div>
-                </div>
-                <div className={`lg:hidden w-16 h-16 flex items-center justify-center `}>
-                    <IconButton size={"large"} edge="start" aria-label={"menu"} color="inherit" onClick={toggleMenu}>
-                        <FilterAltIcon fontSize="large"></FilterAltIcon>
-                    </IconButton>
-                </div>
-                <div
-                    className={`fixed inset-0 bg-black/50 z-40 lg:hidden transition-opacity duration-300  ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-                    onClick={toggleMenu}
-                />
-                <div className={`fixed bottom-0 right-0 w-full transform-gpu bg-mine-shaft-50 flex flex-col items-center py-4 lg:hidden z-50 transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-y-0' : 'translate-y-full'} rounded-t-4xl`}>
-                    <div className="flex w-full justify-between align-center">
-                        <h2 className='text-2xl flex items-center ml-4'>Filtra Per</h2>
-                        <IconButton onClick={toggleMenu} aria-label="close menu" >
-                            <CloseIcon fontSize="large" className = "mr-4"/>
-                        </IconButton>
-                    </div>
-                    <div className="w-11/12 flex flex-col text-mine-shaft-950">
-                    </div>
-                    <div className = 'w-11/12 flex flex-col justify-center items-center gap-y-3 mb-4'>
-                        <label htmlFor="difficolta" className = "self-start">Livello Esperienza</label>
-                        <div className = 'flex w-full justify-between'>
-                            {['Basso', 'Medio', 'Alto'].map((opt) => (
-                                <label key={opt} className={`cursor-pointer w-filter-radio h-12 flex items-center justify-center text-md  rounded-lg border  font-semibold transition-colors ${difficolta === opt ? 'bg-mine-shaft-950 text-white border-transparent' : 'bg-white text-gray-600 border-gray-300 hover:border-gray-400'}`}>
-                                    <input
-                                        type="radio"
-                                        required
-                                        name="difficolta"
-                                        className="hidden"
-                                        checked={difficolta === opt}
-                                        onChange={() => setDifficolta(opt)}
-                                    />
-                                    {opt}
-                                </label>
-                            ))}
+                    <div className='hidden lg:flex gap-6 items-center'>
+                        <div className="flex flex-col">
+                            <label className="text-xs font-bold text-gray-500 mb-1">LIVELLO</label>
+                            <select 
+                                className='h-10 w-32 rounded-md border-gray-200 outline-none focus:ring-1 focus:ring-mine-shaft-950'
+                                value={difficoltaFiltro}
+                                onChange={(e) => setDifficoltaFiltro(e.target.value)}
+                            >
+                                <option value="Tutti">Tutti</option>
+                                <option value="neofita">neofita</option>
+                                <option value="medio">medio</option>
+                                <option value="esperto">esperto</option>
+                            </select>
                         </div>
-                        <label htmlFor="lunghezza" className = "self-start">Lunghezza Percorso</label>
-                        <Slider
-                            sx={{ width: '95%' }}
-                            className = 'w-11/12'
-                            aria-label="Temperature"
-                            defaultValue={2}
-                            valueLabelDisplay="auto"
-                            step={1}
-                            name = "lunghezza"
-                            marks = {marks}
-                            min={1}
-                            max={15}
-                        />
-                        <label htmlFor="data" className = "self-start">Data</label>
-                        <input type="data" placeholder="01/01/2025" className = 'self-start border border-mine-shaft-950 rounded-md h-10 pl-4 focus:outline-none focus:ring-2 focus:ring-mine-shaft-950 focus:border-transparent transition-all'/>
+                        <div className="flex flex-col">
+                            <label className="text-xs font-bold text-gray-500 mb-1 text-uppercase">DATA</label>
+                            <input 
+                                type="date"
+                                className='h-10 w-44 rounded-md border border-gray-200 outline-none focus:ring-1 focus:ring-mine-shaft-950 px-3'
+                                value={dataFiltro}
+                                onChange={(e) => setDataFiltro(e.target.value)}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="lg:hidden w-full flex justify-end">
+                        <IconButton onClick={toggleMenu} color="inherit">
+                            <FilterAltIcon /> <span className="text-sm ml-1 font-bold">Filtri</span>
+                        </IconButton>
                     </div>
                 </div>
             </div>
+
+            <main className="w-11/12 mx-auto mt-12 mb-20">
+                {loading ? (
+                    <div className="flex justify-center items-center h-64">
+                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-mine-shaft-950"></div>
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {gruppiFiltrati.length > 0 ? (
+                            gruppiFiltrati.map((g) => (
+                                <div key={g.id} className="bg-white rounded-2xl shadow-md border border-gray-100 hover:shadow-2xl transition-all duration-300 flex flex-col">
+                                    <div className="p-6">
+                                        <div className="flex justify-between items-start mb-4">
+                                            <h3 className="text-xl font-bold text-mine-shaft-950 leading-tight">{g.nome}</h3>
+                                            <span className={`px-2 py-1 rounded text-[10px] font-black uppercase ${
+                                                g.esperienza === 'esperto' ? 'bg-red-100 text-red-600' : g.esperienza === 'medio'? 'bg-blue-100 text-blue-600' :'bg-green-100 text-green-600'
+                                            }`}>
+                                                {g.esperienza}
+                                            </span>
+                                        </div>
+                                        <div className="space-y-2 mb-4">
+                                            <div className="flex items-center text-gray-500 text-sm gap-2">
+                                                <CalendarMonthIcon fontSize="inherit" />
+                                                {new Date(g.data).toLocaleDateString('it-IT')}
+                                            </div>
+                                            <div className="flex items-center text-gray-500 text-sm gap-2">
+                                                <TerrainIcon fontSize="inherit" />
+                                                Percorso: {g.idPercorso}
+                                            </div>
+                                        </div>
+                                        <p className="text-gray-600 text-sm line-clamp-2 italic">
+                                            {g.descrizione || "Nessuna descrizione."}
+                                        </p>
+                                    </div>
+                                    <div className="mt-auto p-4 bg-gray-50 border-t flex justify-center">
+                                        <button 
+                                            onClick={() => setSelectedGroupId(g.id)} 
+                                            className="text-mine-shaft-950 font-bold hover:tracking-widest transition-all"
+                                        >
+                                            VISUALIZZA DETTAGLI
+                                        </button>
+                                    </div>
+                                </div>
+                            ))
+                        ) : (
+                            <div className="col-span-full text-center py-20 text-gray-400">
+                                Nessun gruppo trovato con questi filtri.
+                            </div>
+                        )}
+                    </div>
+                )}
+            </main>
+
+            <div className={`fixed inset-0 bg-black/50 z-50 lg:hidden transition-all ${isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
+                <div className={`absolute bottom-0 w-full bg-white rounded-t-3xl p-8 transition-transform duration-300 ${isMenuOpen ? 'translate-y-0' : 'translate-y-full'}`}>
+                    <div className="flex justify-between items-center mb-8">
+                        <h2 className="text-2xl font-bold">Filtra Risultati</h2>
+                        <IconButton onClick={toggleMenu}><CloseIcon /></IconButton>
+                    </div>
+                    
+                    <div className="space-y-6">
+                        <div>
+                            <label className="block font-bold mb-3 text-sm uppercase">Livello Esperienza</label>
+                            <div className="flex gap-2">
+                                {['Tutti', 'neofita', 'medio', 'esperto'].map((opt) => (
+                                    <button
+                                        key={opt}
+                                        onClick={() => setDifficoltaFiltro(opt)}
+                                        className={`flex-1 py-3 rounded-lg border font-bold text-sm transition-all ${
+                                            difficoltaFiltro === opt ? 'bg-mine-shaft-950 text-white border-transparent' : 'bg-white text-gray-400 border-gray-200'
+                                        }`}
+                                    >
+                                        {opt}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                        <button 
+                            onClick={toggleMenu}
+                            className="w-full py-4 bg-mine-shaft-950 text-white rounded-xl font-bold mt-4 shadow-lg"
+                        >
+                            APPLICA FILTRI
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <Footer />
-        </>
+        </div>
     );
 }
 
