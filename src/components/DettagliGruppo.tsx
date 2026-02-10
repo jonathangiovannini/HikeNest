@@ -74,13 +74,13 @@ const DettagliGruppo: React.FC<DettaglioProps> = ({ groupId, onClose }) => {
                     <motion.div 
                         initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className="fixed inset-0 bg-black/60 z-[60] backdrop-blur-sm" 
+                        className="fixed inset-0 bg-black/60 z-60 backdrop-blur-sm" 
                     />
                     <motion.div 
                         initial={{ opacity: 0, scale: 0.95, y: 20 }} 
                         animate={{ opacity: 1, scale: 1, y: 0 }} 
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                        className="fixed inset-0 z-[70] flex items-center justify-center pointer-events-none p-4"
+                        className="fixed inset-0 z-70 flex items-center justify-center pointer-events-none p-4"
                     >
                         <div className="bg-white w-full max-w-5xl p-8 rounded-3xl shadow-2xl pointer-events-auto relative max-h-[90vh] overflow-y-auto">
                             

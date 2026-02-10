@@ -15,7 +15,7 @@ const teamMembers: TeamMember[] = [
         roleColor: "#007bff",
         description:
             "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci eos facilis aliquam molestiae tempora doloribus. Consectetur magni consequatur mollitia reprehenderit.",
-        image: "/images/goku.png",
+        image: "/goku.png",
         email: "jonathan.giovannini@studenti.unitn.it",
     },
     {
@@ -24,7 +24,7 @@ const teamMembers: TeamMember[] = [
         roleColor: "#ff6b35",
         description:
             "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus nulla atque illo ducimus. Eos labore animi voluptates repellendus reprehenderit perferendis!",
-        image: "/images/goku.png",
+        image: "/goku.png",
         email: "alessandro.balasso@studenti.unitn.it",
     },
     {
@@ -33,7 +33,7 @@ const teamMembers: TeamMember[] = [
         roleColor: "#2ecc71",
         description:
             "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Debitis porro, eaque corporis ex veritatis quaerat nostrum magni et itaque id.",
-        image: "/images/goku.png",
+        image: "/goku.png",
         email: "nicolas.ciocozan@studenti.unitn.it",
     },
 ];

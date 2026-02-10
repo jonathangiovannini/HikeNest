@@ -24,7 +24,7 @@ html, body{
     background: 
         linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)),
         linear-gradient(rgba(0, 0, 0, 0), var(--color-mine-shaft-50)),
-        url("assets/images/community_cropped.jpg") center/cover no-repeat;
+        url("/community_cropped.jpg") center/cover no-repeat;
     
     min-height: 50vh;
     mask-image: linear-gradient(to bottom, black 83%, transparent 50vh);
@@ -70,7 +70,7 @@ html, body{
     --animate-slideFadeIn-fast: slideFadeIn 0.6s ease-out 0.2s backwards;
     --animate-slideFadeIn-slow: slideFadeIn 0.6s ease-out 0.4s backwards;
 
-    --background-image-sfondo: url("/images/Sfondo.jpg");
+    --background-image-sfondo: url("/Sfondo.jpg");
 }
 
 

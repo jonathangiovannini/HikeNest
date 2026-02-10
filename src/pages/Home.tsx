@@ -14,7 +14,7 @@ function Home() {
             <Navbar />
             <div className="grid grid-cols-1 content-center w-full h-dvh overflow-hidden relative">
                 <img
-                    src="/images/Sfondo.jpg"
+                    src="/Sfondo.jpg"
                     alt="background-hikenest"
                     className="absolute w-full h-full object-cover object-center"
                 />
