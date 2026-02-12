@@ -61,7 +61,7 @@ const Profile = () => {
                 <div className='flex flex-col lg:flex-row w-11/12 lg:w-3/4 justify-between items-center'>
                     <div className='flex flex-col gap-4 items-center'>
                         <div className='w-48 h-48 rounded-full overflow-hidden flex items-center justify-center justify-self-start'>
-                            <img src="images/user.png" alt="" />
+                            <img src="../public/user.png" alt="" />
                         </div>
                     </div>
                     <div className='w-11/12 lg:w-3/4 lg:mt-0 mt-8'>

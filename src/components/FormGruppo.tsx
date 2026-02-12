@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion'; 
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -7,11 +7,22 @@ interface FormGruppoProps {
     onClose: () => void;
 }
 
-const wrapperInputTextStyle = "flex flex-col gap-1";
+// Interfaccia per i dati che arrivano dalla GET /percorsi
+interface Percorso {
+    id: string;   // Qui salveremo l'ID estratto
+    self: string; // Qui terremo l'URL completo
+    nome: string;
+}
+
+const wrapperInputTextStyle = "flex flex-col gap-1 relative"; 
 const inputTxtStyle = "w-full px-4 py-3 bg-white border border-mine-shaft-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-mine-shaft-950 focus:border-transparent transition-all";
 
 const FormGruppo: React.FC<FormGruppoProps> = ({ isOpen, onClose }) => {
     const apiUrl = import.meta.env.VITE_API_URL;
+
+    const [percorsi, setPercorsi] = useState<Percorso[]>([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [showDropdown, setShowDropdown] = useState(false);
 
     const [groupData, setGroupData] = useState({
         nome: "",
@@ -22,14 +33,82 @@ const FormGruppo: React.FC<FormGruppoProps> = ({ isOpen, onClose }) => {
         descrizione: ""
     });
 
+    // 1. Carichiamo e trasformiamo i dati
+    useEffect(() => {
+        if (isOpen) {
+            const fetchPercorsi = async () => {
+                try {
+                    const response = await fetch(`${apiUrl}/percorsi`, {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${localStorage.getItem('token')}`
+                        }
+                    });
+
+                    if (response.ok) {
+                        const rawData = await response.json();
+                        
+                        // --- MODIFICA QUI ---
+                        // Trasformiamo i dati per estrarre l'ID da 'self'
+                        const processedData = rawData.map((item: any) => {
+                            // Divide la stringa per '/' e prende l'ultimo elemento non vuoto
+                            // Es: "/api/v1/percorsi/123" -> ["api", "v1", "percorsi", "123"] -> "123"
+                            const extractedId = item.self.split('/').filter(Boolean).pop();
+                            
+                            return {
+                                ...item,
+                                id: extractedId, // Sovrascriviamo l'id con quello estratto dall'URL
+                                self: item.self  // Manteniamo il self originale
+                            };
+                        });
+                        
+                        setPercorsi(processedData);
+                    } else {
+                        console.error("Errore nel recupero dei percorsi");
+                    }
+                } catch (error) {
+                    console.error("Errore di rete:", error);
+                }
+            };
+            fetchPercorsi();
+        }
+    }, [isOpen, apiUrl]);
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setGroupData(prev => ({ ...prev, [name]: value }));
     };
 
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setSearchTerm(value);
+        setShowDropdown(true);
+        setGroupData(prev => ({ ...prev, idPercorso: "" }));
+    };
+
+    const selectPercorso = (percorso: Percorso) => {
+        // Ora percorso.id contiene l'ID pulito (es. "123") grazie alla trasformazione fatta nel useEffect
+        setGroupData(prev => ({ ...prev, idPercorso: percorso.id }));
+        setSearchTerm(percorso.nome); 
+        setShowDropdown(false); 
+    };
+
+    const filteredPercorsi = percorsi.filter(p => 
+        p.nome.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        if (!groupData.idPercorso) {
+            alert("Per favore seleziona un percorso valido dalla lista.");
+            return;
+        }
+
         try {
+            console.log("Invio ID percorso:", groupData.idPercorso); // Debug check
+            
             const response = await fetch(`${apiUrl}/gruppi`, {
                 method: "POST",
                 headers: {
@@ -46,9 +125,22 @@ const FormGruppo: React.FC<FormGruppoProps> = ({ isOpen, onClose }) => {
                 })
             });
 
-            if (!response.ok) alert(response.headers +""+ response.status);
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                alert(`Errore: ${response.status} ${errorData.message || ''}`);
+                return;
+            }
 
             alert("Gruppo creato!");
+            setGroupData({
+                nome: "",
+                idPercorso: "",
+                esperienza: "medio",
+                data: "",
+                idCreatore: localStorage.getItem('userId'),
+                descrizione: ""
+            });
+            setSearchTerm("");
             onClose();
         } catch (err: any) {
             alert(err.message);
@@ -87,11 +179,44 @@ const FormGruppo: React.FC<FormGruppoProps> = ({ isOpen, onClose }) => {
                                     <input type="text" name="nome" required value={groupData.nome} onChange={handleChange} className={inputTxtStyle} />
                                 </div>
 
+                                {/* SEZIONE AUTOCOMPLETE PERCORSO */}
                                 <div className={wrapperInputTextStyle}>
-                                    <label className="font-semibold text-sm">ID Percorso</label>
-                                    <input type="text" name="idPercorso" required value={groupData.idPercorso} onChange={handleChange} className={inputTxtStyle} />
+                                    <label className="font-semibold text-sm">Percorso</label>
+                                    <input 
+                                        type="text" 
+                                        placeholder="Cerca un percorso..."
+                                        value={searchTerm} 
+                                        onChange={handleSearchChange}
+                                        onFocus={() => setShowDropdown(true)}
+                                        className={inputTxtStyle} 
+                                        autoComplete="off"
+                                    />
+                                    
+                                    {showDropdown && searchTerm && (
+                                        <ul className="absolute top-[105%] left-0 w-full bg-white border border-gray-200 rounded-lg shadow-lg max-h-48 overflow-y-auto z-50">
+                                            {filteredPercorsi.length > 0 ? (
+                                                filteredPercorsi.map((percorso) => (
+                                                    <li 
+                                                        key={percorso.id}
+                                                        onClick={() => selectPercorso(percorso)}
+                                                        className="px-4 py-2 hover:bg-mine-shaft-50 cursor-pointer text-sm text-gray-700 transition-colors border-b border-gray-100 last:border-0"
+                                                    >
+                                                        {percorso.nome}
+                                                    </li>
+                                                ))
+                                            ) : (
+                                                <li className="px-4 py-2 text-sm text-gray-400">
+                                                    Nessun percorso trovato
+                                                </li>
+                                            )}
+                                        </ul>
+                                    )}
+                                    
+                                    {groupData.idPercorso && (
+                                        <span className="text-xs text-green-600 font-medium">✓ Percorso selezionato</span>
+                                    )}
                                 </div>
-
+                                
                                 <div className={wrapperInputTextStyle}>
                                     <label className="font-semibold text-sm">Data</label>
                                     <input type="datetime-local" name="data" required value={groupData.data} onChange={handleChange} className={inputTxtStyle} />

@@ -93,7 +93,7 @@ export default function Ricerca({ onResultFound, onClear }: RicercaProps) {
         <form 
             onSubmit={handleSearchSubmit} 
             style={{ display: 'flex', alignItems: 'center' }} 
-            className='bg-mine-shaft-50 border border-mine-shaft-950 w-full lg:w-96 h-12 justify-evenly rounded-lg shadow-lg'
+            className='bg-mine-shaft-50 border border-mine-shaft-950 w-full lg:w-150 h-12 justify-evenly rounded-lg shadow-lg'
         >
             <input 
                 type="text" 

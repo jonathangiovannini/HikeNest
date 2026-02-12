@@ -18,16 +18,22 @@ interface Gruppo {
     id: string;
     nome: string;
     idPercorso: string;
+    nomePercorso: string;
     esperienza: string;
     data: string;
     descrizione: string;
+}
+interface Percorso {
+    id: string;   
+    self: string; 
+    nome: string;
 }
 
 function Groups() {
     useDocumentTitle('Gruppi - HikeNest');
     
     const [selectedGroupId, setSelectedGroupId] = useState<string | null>(null);
-
+    const [percorsi, setPercorsi] = useState<Percorso[]>([]);
     const [gruppi, setGruppi] = useState<Gruppo[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -36,9 +42,53 @@ function Groups() {
     const [searchTerm, setSearchTerm] = useState("");
     const [difficoltaFiltro, setDifficoltaFiltro] = useState('Tutti');
     const [dataFiltro, setDataFiltro] = useState("");
+    const [searchPercorso, setSearchPercorso] = useState("");
 
     const apiUrl = import.meta.env.VITE_API_URL;
 
+    const getNomePercorso = (idPercorsoDelGruppo: string) => {
+        // Estraiamo l'ID nel caso idPercorso fosse un URL intero
+        const idPulito = idPercorsoDelGruppo.split('/').filter(Boolean).pop();
+        const percorsoTrovato = percorsi.find(p => p.id === idPulito);
+        return percorsoTrovato ? percorsoTrovato.nome : "Caricamento percorso...";
+    };
+
+    const fetchPercorsi = async () => {
+        try {
+            const response = await fetch(`${apiUrl}/percorsi`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+
+            if (response.ok) {
+                const rawData = await response.json();
+                
+                // --- MODIFICA QUI ---
+                // Trasformiamo i dati per estrarre l'ID da 'self'
+                const processedData = rawData.map((item: any) => {
+                    // Divide la stringa per '/' e prende l'ultimo elemento non vuoto
+                    // Es: "/api/v1/percorsi/123" -> ["api", "v1", "percorsi", "123"] -> "123"
+                    const extractedId = item.self.split('/').filter(Boolean).pop();
+                    
+                    return {
+                        ...item,
+                        id: extractedId, // Sovrascriviamo l'id con quello estratto dall'URL
+                        self: item.self  // Manteniamo il self originale
+                    };
+                });
+                
+                setPercorsi(processedData);
+            } else {
+                console.error("Errore nel recupero dei percorsi");
+            }
+        } catch (error) {
+            console.error("Errore di rete:", error);
+        }
+    };
+    fetchPercorsi();
     useEffect(() => {
         const fetchGruppi = async () => {
             try {
@@ -64,12 +114,15 @@ function Groups() {
     const toggleMenu = () => setMenuOpen(!isMenuOpen);
 
     const gruppiFiltrati = gruppi.filter(g => {
-        g.id = g.self.split('/').pop() || "";
-        const matchNome = g.nome.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchData = dataFiltro === "" || g.data.startsWith(dataFiltro);
-        const matchDifficolta = difficoltaFiltro === 'Tutti' || g.esperienza === difficoltaFiltro;
-        return matchNome && matchDifficolta && matchData;
-    });
+    g.id = g.self.split('/').pop() || "";
+    const nomePercorsoAssociato = getNomePercorso(g.idPercorso).toLowerCase();
+    const matchNome = g.nome.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchPercorso = nomePercorsoAssociato.includes(searchPercorso.toLowerCase());
+    const matchData = dataFiltro === "" || g.data.startsWith(dataFiltro);
+    const matchDifficolta = difficoltaFiltro === 'Tutti' || g.esperienza === difficoltaFiltro;
+    
+    return matchNome && matchPercorso && matchDifficolta && matchData;
+});
 
     return (
         <div className="min-h-screen bg-white">
@@ -103,7 +156,7 @@ function Groups() {
             <Separator />
 
             <div className="w-11/12 mt-8 bg-gray-50 rounded-xl mx-auto shadow-lg p-4 lg:p-6">
-                <div className="flex flex-col lg:flex-row justify-between items-center gap-4">
+                <div className="flex flex-col lg:flex-row justify-between items-center gap-10">
                     <input
                         type="text"
                         className='h-12 w-full lg:w-1/3 px-4 rounded-lg border border-gray-200 focus:ring-2 focus:ring-mine-shaft-950 outline-none transition-all'
@@ -111,6 +164,16 @@ function Groups() {
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
+                    <div className="flex flex-col w-300">
+                        <label className="text-xs font-bold text-gray-500 mb-1 text-uppercase">PERCORSO</label>
+                        <input
+                            type="text"
+                            className='h-12 w-full lg:w-1/3 px-4 rounded-lg border border-gray-200 focus:ring-2 focus:ring-mine-shaft-950 outline-none transition-all'
+                            placeholder="Filtra per percorso..."
+                            value={searchPercorso}
+                            onChange={(e) => setSearchPercorso(e.target.value)}
+                        />
+                    </div>
 
                     <div className='hidden lg:flex gap-6 items-center'>
                         <div className="flex flex-col">
@@ -171,7 +234,7 @@ function Groups() {
                                             </div>
                                             <div className="flex items-center text-gray-500 text-sm gap-2">
                                                 <TerrainIcon fontSize="inherit" />
-                                                Percorso: {g.idPercorso}
+                                                Percorso: {getNomePercorso(g.idPercorso)}
                                             </div>
                                         </div>
                                         <p className="text-gray-600 text-sm line-clamp-2 italic">

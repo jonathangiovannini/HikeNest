@@ -15,6 +15,11 @@ interface Gruppo {
     data: string;
     descrizione: string;
 }
+interface Percorso {
+    id: string;   // Qui salveremo l'ID estratto
+    self: string; // Qui terremo l'URL completo
+    nome: string;
+}
 
 const UserGroups: React.FC = () => {
     useDocumentTitle("My Hikes - HikeNest");
@@ -22,6 +27,51 @@ const UserGroups: React.FC = () => {
     const [myGroups, setMyGroups] = useState<Gruppo[]>([]);
     const [loading, setLoading] = useState(true);
     const apiUrl = import.meta.env.VITE_API_URL;
+
+    const [percorsi, setPercorsi] = useState<Percorso[]>([]);
+    const getNomePercorso = (idPercorsoDelGruppo: string) => {
+        // Estraiamo l'ID nel caso idPercorso fosse un URL intero
+        const idPulito = idPercorsoDelGruppo.split('/').filter(Boolean).pop();
+        const percorsoTrovato = percorsi.find(p => p.id === idPulito);
+        return percorsoTrovato ? percorsoTrovato.nome : "Caricamento percorso...";
+    };
+
+    const fetchPercorsi = async () => {
+        try {
+            const response = await fetch(`${apiUrl}/percorsi`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+
+            if (response.ok) {
+                const rawData = await response.json();
+                
+                // --- MODIFICA QUI ---
+                // Trasformiamo i dati per estrarre l'ID da 'self'
+                const processedData = rawData.map((item: any) => {
+                    // Divide la stringa per '/' e prende l'ultimo elemento non vuoto
+                    // Es: "/api/v1/percorsi/123" -> ["api", "v1", "percorsi", "123"] -> "123"
+                    const extractedId = item.self.split('/').filter(Boolean).pop();
+                    
+                    return {
+                        ...item,
+                        id: extractedId, // Sovrascriviamo l'id con quello estratto dall'URL
+                        self: item.self  // Manteniamo il self originale
+                    };
+                });
+                
+                setPercorsi(processedData);
+            } else {
+                console.error("Errore nel recupero dei percorsi");
+            }
+        } catch (error) {
+            console.error("Errore di rete:", error);
+        }
+    };
+    fetchPercorsi();
 
     useEffect(() => {
         const fetchMyGroups = async () => {
@@ -101,7 +151,7 @@ const UserGroups: React.FC = () => {
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <TerrainIcon fontSize="inherit" className="text-mine-shaft-500" />
-                                    {gruppo.idPercorso}
+                                    {getNomePercorso(gruppo.idPercorso)}
                                 </div>
                             </div>
 

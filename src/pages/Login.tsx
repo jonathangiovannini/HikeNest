@@ -60,7 +60,7 @@ function Login() {
                 <div className="max-w-md w-full space-y-6">
                     <div className="text-center">
                         <Link to="/" className="inline-block">
-                            <img src="images/Logo.png" alt="logo-hikenest" className="w-36 mx-auto mb-4" />
+                            <img src="../public/Logo.png" alt="logo-hikenest" className="w-36 mx-auto mb-4" />
                         </Link>
                         <h1 className="text-3xl font-bold text-mine-shaft-950 mb-2">
                             Bentornato!
