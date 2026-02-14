@@ -59,7 +59,7 @@ function SignUp() {
                 <div className="max-w-2xl w-full space-y-6">
                     <div className="text-center">
                         <Link to="/" className="inline-block">
-                            <img src="../public/Logo.png" alt="logo-hikenest" className="w-36 mx-auto mb-4" />
+                            <img src="/Logo.png" alt="logo-hikenest" className="w-36 mx-auto mb-4" />
                         </Link>
                         <h1 className="text-3xl font-bold text-mine-shaft-950 mb-2">
                             Crea il tuo account
