@@ -25,12 +25,12 @@ export default function Map() {
         
 
         <div style={{height: '100dvh', width: '100%' }}>
-            <MapContainer center={position} zoom={10} style={{ height: '100%', width: '100%' }}>
+            <MapContainer  scrollWheelZoom ={false} center={position} zoom={10} style={{ height: '100%', width: '100%' }}>
                 
                 <div className = "h-[calc(100dvh-110px)] flex flex-row justify-center lg:justify-start" >
                     <button 
                         onClick={() => setIsListOpen(true)}
-                        className="mt-auto lg:mt-6 z-1001 bg-mine-shaft-50 text-mine-shaft-950 border border-mine-shaft-950 rounded-lg  h-12 hover:bg-mine-shaft-100 shadow-lg font-semibold transition-all flex items-center gap-2 w-11/12 lg:w-1/3"
+                        className="mt-auto lg:ml-24 lg:mt-6 z-1001 bg-mine-shaft-50 text-mine-shaft-950 border border-mine-shaft-950 rounded-lg  h-12 hover:bg-mine-shaft-100 shadow-lg font-semibold transition-all flex items-center gap-2 w-11/12 lg:w-1/3"
                     >
                     <span className="text-xl"></span> Lista dei percorsi
                     </button>
