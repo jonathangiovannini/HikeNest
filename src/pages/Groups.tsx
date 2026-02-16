@@ -65,18 +65,13 @@ function Groups() {
 
             if (response.ok) {
                 const rawData = await response.json();
-                
-                // --- MODIFICA QUI ---
-                // Trasformiamo i dati per estrarre l'ID da 'self'
                 const processedData = rawData.map((item: any) => {
-                    // Divide la stringa per '/' e prende l'ultimo elemento non vuoto
-                    // Es: "/api/v1/percorsi/123" -> ["api", "v1", "percorsi", "123"] -> "123"
                     const extractedId = item.self.split('/').filter(Boolean).pop();
                     
                     return {
                         ...item,
-                        id: extractedId, // Sovrascriviamo l'id con quello estratto dall'URL
-                        self: item.self  // Manteniamo il self originale
+                        id: extractedId,
+                        self: item.self  
                     };
                 });
                 
@@ -157,18 +152,22 @@ function Groups() {
 
             <div className="w-11/12 mt-8 bg-gray-50 rounded-xl mx-auto shadow-lg p-4 lg:p-6">
                 <div className="flex flex-col lg:flex-row justify-between items-center gap-10">
-                    <input
-                        type="text"
-                        className='h-12 w-full lg:w-1/3 px-4 rounded-lg border border-gray-200 focus:ring-2 focus:ring-mine-shaft-950 outline-none transition-all'
-                        placeholder="Cerca un gruppo..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                    <div className="flex flex-col w-300">
-                        <label className="text-xs font-bold text-gray-500 mb-1 text-uppercase">PERCORSO</label>
+                    <div className="flex flex-col w-full">
+                        <label className="text-xs font-bold text-gray-500 mb-1 text-uppercase">GRUPPO</label>
                         <input
                             type="text"
-                            className='h-12 w-full lg:w-1/3 px-4 rounded-lg border border-gray-200 focus:ring-2 focus:ring-mine-shaft-950 outline-none transition-all'
+                            className='h-12 w-full lg:w-4/5 px-4 rounded-lg border border-gray-200 focus:ring-2 focus:ring-mine-shaft-950 outline-none transition-all'
+                            placeholder="Cerca un gruppo..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                    </div>
+                    
+                    <div className="flex flex-col w-full">
+                        <label className="text-xs font-bold text-gray-500 mb-1 text-uppercase" htmlFor=''>PERCORSO</label>
+                        <input
+                            type="text"
+                            className='h-12 w-full lg:w-4/5 px-4 rounded-lg border border-gray-200 focus:ring-2 focus:ring-mine-shaft-950 outline-none transition-all'
                             placeholder="Filtra per percorso..."
                             value={searchPercorso}
                             onChange={(e) => setSearchPercorso(e.target.value)}
@@ -179,7 +178,7 @@ function Groups() {
                         <div className="flex flex-col">
                             <label className="text-xs font-bold text-gray-500 mb-1">LIVELLO</label>
                             <select 
-                                className='h-10 w-32 rounded-md border-gray-200 outline-none focus:ring-1 focus:ring-mine-shaft-950'
+                                className='h-12 w-32 rounded-md border-gray-200 outline-none focus:ring-1 focus:ring-mine-shaft-950'
                                 value={difficoltaFiltro}
                                 onChange={(e) => setDifficoltaFiltro(e.target.value)}
                             >
@@ -193,7 +192,7 @@ function Groups() {
                             <label className="text-xs font-bold text-gray-500 mb-1 text-uppercase">DATA</label>
                             <input 
                                 type="date"
-                                className='h-10 w-44 rounded-md border border-gray-200 outline-none focus:ring-1 focus:ring-mine-shaft-950 px-3'
+                                className='h-12 w-44 rounded-md border border-gray-200 outline-none focus:ring-1 focus:ring-mine-shaft-950 px-3'
                                 value={dataFiltro}
                                 onChange={(e) => setDataFiltro(e.target.value)}
                             />
