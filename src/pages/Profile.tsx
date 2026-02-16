@@ -80,7 +80,7 @@ const Profile = () => {
                     isOpen={FormAperta}
                     onClose={() => setForm(false)}
                 />
-                <div className='w-11/12 lg:w-3/4 mt-8'>
+                <div className='w-full mt-8'>
                     <StatGrid/>
                 </div>
                 <button

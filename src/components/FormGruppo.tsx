@@ -7,10 +7,9 @@ interface FormGruppoProps {
     onClose: () => void;
 }
 
-// Interfaccia per i dati che arrivano dalla GET /percorsi
 interface Percorso {
-    id: string;   // Qui salveremo l'ID estratto
-    self: string; // Qui terremo l'URL completo
+    id: string;   
+    self: string;
     nome: string;
 }
 
@@ -33,7 +32,6 @@ const FormGruppo: React.FC<FormGruppoProps> = ({ isOpen, onClose }) => {
         descrizione: ""
     });
 
-    // 1. Carichiamo e trasformiamo i dati
     useEffect(() => {
         if (isOpen) {
             const fetchPercorsi = async () => {
@@ -49,17 +47,14 @@ const FormGruppo: React.FC<FormGruppoProps> = ({ isOpen, onClose }) => {
                     if (response.ok) {
                         const rawData = await response.json();
                         
-                        // --- MODIFICA QUI ---
-                        // Trasformiamo i dati per estrarre l'ID da 'self'
                         const processedData = rawData.map((item: any) => {
-                            // Divide la stringa per '/' e prende l'ultimo elemento non vuoto
-                            // Es: "/api/v1/percorsi/123" -> ["api", "v1", "percorsi", "123"] -> "123"
+
                             const extractedId = item.self.split('/').filter(Boolean).pop();
                             
                             return {
                                 ...item,
-                                id: extractedId, // Sovrascriviamo l'id con quello estratto dall'URL
-                                self: item.self  // Manteniamo il self originale
+                                id: extractedId,
+                                self: item.self  
                             };
                         });
                         
@@ -88,7 +83,6 @@ const FormGruppo: React.FC<FormGruppoProps> = ({ isOpen, onClose }) => {
     };
 
     const selectPercorso = (percorso: Percorso) => {
-        // Ora percorso.id contiene l'ID pulito (es. "123") grazie alla trasformazione fatta nel useEffect
         setGroupData(prev => ({ ...prev, idPercorso: percorso.id }));
         setSearchTerm(percorso.nome); 
         setShowDropdown(false); 
@@ -107,7 +101,7 @@ const FormGruppo: React.FC<FormGruppoProps> = ({ isOpen, onClose }) => {
         }
 
         try {
-            console.log("Invio ID percorso:", groupData.idPercorso); // Debug check
+            console.log("Invio ID percorso:", groupData.idPercorso); 
             
             const response = await fetch(`${apiUrl}/gruppi`, {
                 method: "POST",
@@ -179,7 +173,6 @@ const FormGruppo: React.FC<FormGruppoProps> = ({ isOpen, onClose }) => {
                                     <input type="text" name="nome" required value={groupData.nome} onChange={handleChange} className={inputTxtStyle} />
                                 </div>
 
-                                {/* SEZIONE AUTOCOMPLETE PERCORSO */}
                                 <div className={wrapperInputTextStyle}>
                                     <label className="font-semibold text-sm">Percorso</label>
                                     <input 

@@ -10,8 +10,8 @@ interface DettaglioProps {
     onClose: () => void;
 }
 interface Percorso {
-    id: string;   
-    self: string; 
+    id: string;
+    self: string;
     nome: string;
 }
 
@@ -25,7 +25,6 @@ const DettagliGruppo: React.FC<DettaglioProps> = ({ groupId, onClose }) => {
     const [percorsi, setPercorsi] = useState<Percorso[]>([]);
 
     const getNomePercorso = (idPercorsoDelGruppo: string) => {
-        // Estraiamo l'ID nel caso idPercorso fosse un URL intero
         const idPulito = idPercorsoDelGruppo.split('/').filter(Boolean).pop();
         const percorsoTrovato = percorsi.find(p => p.id === idPulito);
         return percorsoTrovato ? percorsoTrovato.nome : "Caricamento percorso...";
@@ -43,21 +42,19 @@ const DettagliGruppo: React.FC<DettaglioProps> = ({ groupId, onClose }) => {
 
             if (response.ok) {
                 const rawData = await response.json();
-                
-                // --- MODIFICA QUI ---
-                // Trasformiamo i dati per estrarre l'ID da 'self'
+
+
                 const processedData = rawData.map((item: any) => {
-                    // Divide la stringa per '/' e prende l'ultimo elemento non vuoto
-                    // Es: "/api/v1/percorsi/123" -> ["api", "v1", "percorsi", "123"] -> "123"
+
                     const extractedId = item.self.split('/').filter(Boolean).pop();
-                    
+
                     return {
                         ...item,
-                        id: extractedId, // Sovrascriviamo l'id con quello estratto dall'URL
-                        self: item.self  // Manteniamo il self originale
+                        id: extractedId,
+                        self: item.self
                     };
                 });
-                
+
                 setPercorsi(processedData);
             } else {
                 console.error("Errore nel recupero dei percorsi");
@@ -67,21 +64,19 @@ const DettagliGruppo: React.FC<DettaglioProps> = ({ groupId, onClose }) => {
         }
     };
     fetchPercorsi();
-    // Caricamento dati iniziali
     useEffect(() => {
         if (groupId) {
             fetch(`${apiUrl}/gruppi/${groupId}`, {
                 headers: { "Authorization": `Bearer ${localStorage.getItem('token')}` }
             })
-            .then(res => res.json())
-            .then(json => setData(json))
-            .catch(err => console.error(err));
+                .then(res => res.json())
+                .then(json => setData(json))
+                .catch(err => console.error(err));
         } else {
             setData(null);
         }
     }, [groupId, apiUrl]);
 
-    // Funzione per unirsi al gruppo
     const gestisciPartecipazione = async () => {
         if (!groupId) return;
 
@@ -100,13 +95,12 @@ const DettagliGruppo: React.FC<DettaglioProps> = ({ groupId, onClose }) => {
                 throw new Error(errorData.message || "Errore durante l'iscrizione");
             }
 
-            // Se l'iscrizione ha successo, ricarichiamo i dati per aggiornare la lista partecipanti
             const updatedRes = await fetch(`${apiUrl}/gruppi/${groupId}`, {
                 headers: { "Authorization": `Bearer ${localStorage.getItem('token')}` }
             });
             const updatedData = await updatedRes.json();
             setData(updatedData);
-            
+
             alert("Ti sei unito al gruppo con successo!");
 
         } catch (err: any) {
@@ -120,19 +114,19 @@ const DettagliGruppo: React.FC<DettaglioProps> = ({ groupId, onClose }) => {
         <AnimatePresence>
             {groupId && (
                 <>
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className="fixed inset-0 bg-black/60 z-60 backdrop-blur-sm" 
+                        className="fixed inset-0 bg-black/60 z-60 backdrop-blur-sm"
                     />
-                    <motion.div 
-                        initial={{ opacity: 0, scale: 0.95, y: 20 }} 
-                        animate={{ opacity: 1, scale: 1, y: 0 }} 
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
                         className="fixed inset-0 z-70 flex items-center justify-center pointer-events-none p-4"
                     >
                         <div className="bg-white w-full max-w-5xl p-8 rounded-3xl shadow-2xl pointer-events-auto relative max-h-[90vh] overflow-y-auto">
-                            
+
                             <button onClick={onClose} className="absolute top-6 right-6 text-gray-400 hover:text-gray-600 transition-colors">
                                 <CloseIcon fontSize="large" />
                             </button>
@@ -147,25 +141,25 @@ const DettagliGruppo: React.FC<DettaglioProps> = ({ groupId, onClose }) => {
                                     </div>
 
                                     <div>
-                                        <label className={labelStyle}><TerrainIcon fontSize="inherit"/>Percorso</label>
+                                        <label className={labelStyle}><TerrainIcon fontSize="inherit" />Percorso</label>
                                         <input type="text" readOnly value={getNomePercorso(data.idPercorso)} className={inputTxtStyle} />
                                     </div>
                                     <div>
-                                        <label className={labelStyle}><CalendarMonthIcon fontSize="inherit"/> Data Hike</label>
+                                        <label className={labelStyle}><CalendarMonthIcon fontSize="inherit" /> Data Hike</label>
                                         <input type="text" readOnly value={new Date(data.data).toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric' })} className={inputTxtStyle} />
                                     </div>
 
                                     <div>
                                         <label className={labelStyle}>Livello Esperienza</label>
                                         <div className={`py-3 px-4 rounded-lg font-black uppercase text-center text-sm border 
-                                            ${data.esperienza === 'esperto' ? 'bg-red-50 text-red-600 border-red-200' : 
-                                              data.esperienza === 'medio' ? 'bg-blue-50 text-blue-600 border-blue-200' : 
-                                              'bg-green-50 text-green-600 border-green-200'}`}>
+                                            ${data.esperienza === 'esperto' ? 'bg-red-50 text-red-600 border-red-200' :
+                                                data.esperienza === 'medio' ? 'bg-blue-50 text-blue-600 border-blue-200' :
+                                                    'bg-green-50 text-green-600 border-green-200'}`}>
                                             {data.esperienza}
                                         </div>
                                     </div>
                                     <div>
-                                        <label className={labelStyle}><PersonIcon fontSize="inherit"/> Organizzatore (ID)</label>
+                                        <label className={labelStyle}><PersonIcon fontSize="inherit" /> Organizzatore (ID)</label>
                                         <input type="text" readOnly value={data.idCreatore} className={inputTxtStyle} />
                                     </div>
 
@@ -175,7 +169,7 @@ const DettagliGruppo: React.FC<DettaglioProps> = ({ groupId, onClose }) => {
                                     </div>
 
                                     <div className="md:col-span-2 pt-4">
-                                        <button 
+                                        <button
                                             onClick={gestisciPartecipazione}
                                             disabled={isSubmitting}
                                             className={`w-full py-4 text-white font-black rounded-xl shadow-xl transition-all uppercase tracking-tighter text-lg active:scale-95 flex justify-center items-center

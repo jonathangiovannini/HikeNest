@@ -15,7 +15,7 @@ interface ListaPercorsiProps {
 }
 
 interface Percorso {
-    id: string; // Cambiato a string per coerenza con l'estrazione ID
+    id: string;
     self: string;
     nome: string;
     difficolta: string;
@@ -28,7 +28,6 @@ export default function ListaPercorsi({ onClose }: ListaPercorsiProps) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     
-    // --- NUOVO STATO PER IL DETTAGLIO ---
     const [selectedPercorsoId, setSelectedPercorsoId] = useState<string | null>(null);
 
     const [searchName, setSearchName] = useState('');
@@ -50,7 +49,6 @@ export default function ListaPercorsi({ onClose }: ListaPercorsiProps) {
                 if (!response.ok) throw new Error('Errore nel recupero dei dati');
                 const data = await response.json();
                 
-                // Estraggo l'ID dall'URL self come fatto negli altri componenti
                 const processedData = data.map((p: any) => ({
                     ...p,
                     id: p.self.split('/').filter(Boolean).pop()
@@ -92,10 +90,8 @@ export default function ListaPercorsi({ onClose }: ListaPercorsiProps) {
     };
 
     return (
-        <div className="absolute inset-0 z-[2000] flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
+        <div className="absolute inset-0 z-2000 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
             
-            {/* --- COMPONENTE DETTAGLI PERCORSO --- */}
-            {/* Si apre sopra la lista quando selectedPercorsoId non è null */}
             {selectedPercorsoId && (
                 <DettagliPercorso 
                     percorsoId={selectedPercorsoId} 
@@ -105,7 +101,6 @@ export default function ListaPercorsi({ onClose }: ListaPercorsiProps) {
 
             <div className="bg-white w-full max-w-4xl h-[85vh] rounded-xl shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in duration-200">
                 
-                {/* --- HEADER --- */}
                 <div className="bg-white p-5 border-b flex justify-between items-center shrink-0">
                     <div className="flex items-center gap-3">
                         <div className="p-2 bg-blue-50 rounded-lg">
@@ -121,7 +116,6 @@ export default function ListaPercorsi({ onClose }: ListaPercorsiProps) {
                     </button>
                 </div>
 
-                {/* --- FILTRI --- */}
                 <div className="bg-slate-50 p-4 border-b shrink-0">
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
                         <div className="relative">
@@ -171,7 +165,6 @@ export default function ListaPercorsi({ onClose }: ListaPercorsiProps) {
                     </div>
                 </div>
 
-                {/* --- LISTA --- */}
                 <div className="overflow-y-auto p-4 flex-1 bg-white">
                     {loading ? (
                         <div className="flex flex-col justify-center items-center h-40 text-slate-400 gap-2">
@@ -210,7 +203,6 @@ export default function ListaPercorsi({ onClose }: ListaPercorsiProps) {
                                         </div>
                                     </div>
                                     
-                                    {/* --- AZIONE SUL BOTTONE --- */}
                                     <button 
                                         onClick={() => setSelectedPercorsoId(percorso.id)}
                                         className="mt-4 flex items-center justify-center gap-2 w-full bg-slate-50 text-slate-700 font-semibold py-2 rounded-lg hover:bg-blue-600 hover:text-white transition-all text-sm group/btn"

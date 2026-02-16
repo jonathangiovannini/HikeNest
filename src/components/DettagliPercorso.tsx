@@ -10,7 +10,6 @@ interface DettagliPercorsoProps {
     onClose: () => void;
 }
 
-// ... interfacce precedenti (Percorso, Recensione, Segnalazione) ...
 
 const DettagliPercorso: React.FC<DettagliPercorsoProps> = ({ percorsoId, onClose }) => {
     const [percorso, setPercorso] = useState<any>(null);
@@ -19,7 +18,6 @@ const DettagliPercorso: React.FC<DettagliPercorsoProps> = ({ percorsoId, onClose
     const [loading, setLoading] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    // Stati per i Form
     const [showReviewForm, setShowReviewForm] = useState(false);
     const [showReportForm, setShowReportForm] = useState(false);
     const [reviewData, setReviewData] = useState({ testo: '', valutazione: 5 });
@@ -45,7 +43,6 @@ const DettagliPercorso: React.FC<DettagliPercorsoProps> = ({ percorsoId, onClose
 
     useEffect(() => { if (percorsoId) fetchData(); }, [percorsoId]);
 
-    // --- LOGICA DI INVIO ---
     const inviaRecensione = async () => {
         if (!reviewData.testo) return;
         setIsSubmitting(true);
@@ -58,7 +55,7 @@ const DettagliPercorso: React.FC<DettagliPercorsoProps> = ({ percorsoId, onClose
             if (res.ok) {
                 setReviewData({ testo: '', valutazione: 5 });
                 setShowReviewForm(false);
-                fetchData(); // Ricarica la lista
+                fetchData();
             }
         } catch (err) { alert("Errore nell'invio"); }
         finally { setIsSubmitting(false); }
@@ -84,12 +81,11 @@ const DettagliPercorso: React.FC<DettagliPercorsoProps> = ({ percorsoId, onClose
 
     return (
         <AnimatePresence>
-            <div className="fixed inset-0 z-[3000] flex items-center justify-center p-4">
+            <div className="fixed inset-0 z-3000 flex items-center justify-center p-4">
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose} className="absolute inset-0 bg-slate-900/60 backdrop-blur-md" />
 
                 <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="relative bg-white w-full max-w-3xl max-h-[90vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col">
                     
-                    {/* Header */}
                     <div className="p-6 border-b flex justify-between items-center bg-white sticky top-0 z-10">
                         <div className="flex items-center gap-3">
                             <div className="p-2 bg-blue-600 rounded-xl"><Mountain className="w-6 h-6 text-white" /></div>
@@ -101,7 +97,6 @@ const DettagliPercorso: React.FC<DettagliPercorsoProps> = ({ percorsoId, onClose
                     <div className="overflow-y-auto p-6 space-y-8">
                         {loading ? ( <div className="py-20 text-center"><Loader2 className="animate-spin mx-auto w-10 h-10 text-blue-600" /></div> ) : (
                             <>
-                                {/* Info Base */}
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 col-span-2">
                                         <p className="text-[10px] font-black text-slate-400 uppercase">Nome</p>
@@ -111,7 +106,6 @@ const DettagliPercorso: React.FC<DettagliPercorsoProps> = ({ percorsoId, onClose
                                     <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100"><MapPin className="w-4 h-4 mb-1 text-rose-500" /><p className="font-bold">{percorso?.localitaPartenza}</p></div>
                                 </div>
 
-                                {/* --- SEZIONE SEGNALAZIONI --- */}
                                 <section>
                                     <div className="flex justify-between items-center mb-4">
                                         <div className="flex items-center gap-2">
@@ -155,7 +149,6 @@ const DettagliPercorso: React.FC<DettagliPercorsoProps> = ({ percorsoId, onClose
                                     </div>
                                 </section>
 
-                                {/* --- SEZIONE RECENSIONI --- */}
                                 <section>
                                     <div className="flex justify-between items-center mb-4">
                                         <div className="flex items-center gap-2">
