@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 function Home() {
-    const isLogged = false;
+    const token = localStorage.getItem("token");
+    const isLogged = !!token;
     useDocumentTitle('Home - HikeNest');
 
 
