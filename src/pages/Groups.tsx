@@ -216,7 +216,7 @@ function Groups() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {gruppiFiltrati.length > 0 ? (
                             gruppiFiltrati.map((g) => (
-                                <div key={g.id} className="bg-white rounded-2xl shadow-md border border-gray-100 hover:shadow-2xl transition-all duration-300 flex flex-col">
+                                <div key={g.id} className="bg-mine-shaft-50 rounded-2xl shadow-md border border-gray-100 hover:shadow-2xl transition-all duration-300 flex flex-col">
                                     <div className="p-6">
                                         <div className="flex justify-between items-start mb-4">
                                             <h3 className="text-xl font-bold text-mine-shaft-950 leading-tight">{g.nome}</h3>
@@ -260,7 +260,7 @@ function Groups() {
             </main>
 
             <div className={`fixed inset-0 bg-black/50 z-50 lg:hidden transition-all ${isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
-                <div className={`absolute bottom-0 w-full bg-white rounded-t-3xl p-8 transition-transform duration-300 ${isMenuOpen ? 'translate-y-0' : 'translate-y-full'}`}>
+                <div className={`absolute bottom-0 w-full bg-mine-shaft-50 rounded-t-3xl p-8 transition-transform duration-300 ${isMenuOpen ? 'translate-y-0' : 'translate-y-full'}`}>
                     <div className="flex justify-between items-center mb-8">
                         <h2 className="text-2xl font-bold">Filtra Risultati</h2>
                         <IconButton onClick={toggleMenu}><CloseIcon /></IconButton>
@@ -275,7 +275,7 @@ function Groups() {
                                         key={opt}
                                         onClick={() => setDifficoltaFiltro(opt)}
                                         className={`flex-1 py-3 rounded-lg border font-bold text-sm transition-all ${
-                                            difficoltaFiltro === opt ? 'bg-mine-shaft-950 text-white border-transparent' : 'bg-white text-gray-400 border-gray-200'
+                                            difficoltaFiltro === opt ? 'bg-mine-shaft-950 text-white border-transparent' : 'bg-mine-shaft-50 text-gray-400 border-gray-200'
                                         }`}
                                     >
                                         {opt}
