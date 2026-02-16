@@ -12,8 +12,8 @@ const Profile = () => {
     const [FormAperta, setForm] = useState(false);
     const apiUrl = import.meta.env.VITE_API_URL;
     const idUtente = localStorage.getItem('userId');
-    const username = localStorage.getItem('username');
     const [userData, setUserData] = useState({
+        username: "",
         bio: "",
         nGruppi: 0,
         kmTotali: 0,
@@ -34,6 +34,7 @@ const Profile = () => {
                 }
                 const data = await response.json();
                 setUserData({
+                    username: data.username,
                     bio: data.bio,
                     nGruppi: data.nGruppi,
                     kmTotali: data.kmTotali,
@@ -66,7 +67,7 @@ const Profile = () => {
                     </div>
                     <div className='w-11/12 lg:w-3/4 lg:mt-0 mt-8'>
                         <div className='flex flex-col gap-4 justify-center lg:items-start items-center'>
-                            <h2 className='font-bold text-3xl'>{username}</h2>
+                            <h2 className='font-bold text-3xl'>{userData.username}</h2>
                             <p>{userData.bio}</p>
                         </div>
                     </div>
