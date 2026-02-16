@@ -268,7 +268,7 @@ function Groups() {
                     
                     <div className="space-y-6">
                         <div>
-                            <label className="block font-bold mb-3 text-sm uppercase">Livello Esperienza</label>
+                            <label className="block font-bold mb-3 text-md">Livello Esperienza</label>
                             <div className="flex gap-2">
                                 {['Tutti', 'neofita', 'medio', 'esperto'].map((opt) => (
                                     <button
@@ -282,6 +282,15 @@ function Groups() {
                                     </button>
                                 ))}
                             </div>
+                        </div>
+                        <div className = "flex flex-col gap-2">
+                            <label className="text-md font-bold text-mineshaft-950 mb-1 ">Data</label>
+                            <input 
+                                type="date"
+                                className='h-12 w-44 rounded-md border border-gray-200 outline-none focus:ring-1 focus:ring-mine-shaft-950 px-3'
+                                value={dataFiltro}
+                                onChange={(e) => setDataFiltro(e.target.value)}
+                            />
                         </div>
                         <button 
                             onClick={toggleMenu}
