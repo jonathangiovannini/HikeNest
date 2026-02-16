@@ -7,6 +7,7 @@ import About from "./pages/About.tsx";
 import MyHikes from './pages/MyHikes.tsx'
 import Profile from './pages/Profile.tsx'
 import Map from './pages/Map.tsx'
+import PrivateData from './pages/PrivateData.tsx'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/my-hikes" element={<MyHikes/>}/>
             <Route path="/profile" element = {<Profile/>}/>
             <Route path="/map" element = {<Map/>}/>
+            <Route path="/private" element = {<PrivateData/>}/>
         </Routes>
     </>
   )

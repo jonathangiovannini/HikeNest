@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function Footer() {
     return (
         <>
@@ -7,21 +9,21 @@ function Footer() {
                         className="mt-4 border-t border-gray-100 pt-8 sm:flex sm:items-center sm:justify-between dark:border-gray-800">
                         <ul className="flex flex-wrap justify-center gap-4 text-xs lg:justify-end">
                             <li>
-                                <a href="#" className="text-shadow-mine-shaft-700 transition hover:opacity-75 ">
+                                <Link to="/private" className="text-shadow-mine-shaft-700 transition hover:opacity-75 ">
                                     Terms &amp; Conditions
-                                </a>
+                                </Link>
                             </li>
 
                             <li>
-                                <a href="#" className="text-shadow-mine-shaft-700 transition hover:opacity-75 ">
+                                <Link to="/private" className="text-shadow-mine-shaft-700 transition hover:opacity-75 ">
                                     Privacy Policy
-                                </a>
+                                </Link>
                             </li>
 
                             <li>
-                                <a href="#" className="text-shadow-mine-shaft-700 transition hover:opacity-75 ">
+                                <Link to="/private" className="text-shadow-mine-shaft-700 transition hover:opacity-75 ">
                                     Cookies
-                                </a>
+                                </Link>
                             </li>
                         </ul>
 
