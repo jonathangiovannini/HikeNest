@@ -14,7 +14,7 @@ const teamMembers: TeamMember[] = [
         role: "Front-End Developer",
         roleColor: "#007bff",
         description:
-            "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci eos facilis aliquam molestiae tempora doloribus. Consectetur magni consequatur mollitia reprehenderit.",
+            "Specializzato nella creazione di interfacce utente moderne e intuitive. Unisce estetica e funzionalità per garantire un'esperienza utente fluida, reattiva e ottimizzata per ogni dispositivo.",
         image: "/user.png",
         email: "jonathan.giovannini@studenti.unitn.it",
     },
@@ -23,7 +23,7 @@ const teamMembers: TeamMember[] = [
         role: "Back-End Developer",
         roleColor: "#ff6b35",
         description:
-            "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus nulla atque illo ducimus. Eos labore animi voluptates repellendus reprehenderit perferendis!",
+            "Esperto nella progettazione di architetture server robuste e scalabili. Si occupa della gestione dei database e della sicurezza del dato, garantendo stabilità e prestazioni elevate al sistema.",
         image: "/user.png",
         email: "alessandro.balasso@studenti.unitn.it",
     },
@@ -32,7 +32,7 @@ const teamMembers: TeamMember[] = [
         role: "Full Stack Developer",
         roleColor: "#2ecc71",
         description:
-            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Debitis porro, eaque corporis ex veritatis quaerat nostrum magni et itaque id.",
+            "Sviluppatore versatile con una visione completa del ciclo di sviluppo software. Integra fluidamente logiche di back-end e interfacce front-end per fornire soluzioni digitali end-to-end.",
         image: "/user.png",
         email: "nicolas.ciocozan@studenti.unitn.it",
     },
