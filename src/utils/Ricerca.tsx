@@ -85,7 +85,7 @@ export default function Ricerca({ onResultFound, onClear }: RicercaProps) {
 
 
   return (
-    <div className="absolute inset-0 flex flex-col justify-end items-center lg:justify-start lg:items-end z-1000 pointer-events-none">
+    <div className=" hidden lg:absolute inset-0 lg:flex flex-col justify-end items-center lg:justify-start lg:items-end z-1000 pointer-events-none">
        <div 
             className="leaflet-control leaflet-bar border-none! shadow-none! pointer-events-auto w-11/12 lg:w-auto flex justify-center lg:justify-end mb-32 lg:mb-0 lg:mt-6 lg:mr-8" 
             style={{ display: 'flex', background: 'transparent' }}
