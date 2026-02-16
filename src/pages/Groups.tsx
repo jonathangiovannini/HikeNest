@@ -150,7 +150,7 @@ function Groups() {
             
             <Separator />
 
-            <div className="w-11/12 mt-8 bg-gray-50 rounded-xl mx-auto shadow-lg p-4 lg:p-6">
+            <div className="w-11/12 mt-8 bg-mineshaft-50 rounded-xl mx-auto shadow-lg p-4 lg:p-6">
                 <div className="flex flex-col lg:flex-row justify-between items-center gap-10">
                     <div className="flex flex-col w-full">
                         <label className="text-xs font-bold text-gray-500 mb-1 text-uppercase">GRUPPO</label>
@@ -240,7 +240,7 @@ function Groups() {
                                             {g.descrizione || "Nessuna descrizione."}
                                         </p>
                                     </div>
-                                    <div className="mt-auto p-4 bg-gray-50 border-t flex justify-center">
+                                    <div className="mt-auto p-4 bg-gray-50 border-t flex justify-center rounded-2xl">
                                         <button 
                                             onClick={() => setSelectedGroupId(g.id)} 
                                             className="text-mine-shaft-950 font-bold hover:tracking-widest transition-all"
