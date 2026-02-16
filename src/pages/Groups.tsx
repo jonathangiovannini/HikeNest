@@ -120,7 +120,7 @@ function Groups() {
 });
 
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-mineshaft-50">
             <Navbar />
             
             <Section>
