@@ -10,10 +10,8 @@ import useDocumentTitle from '../hooks/useDocumentTitle';
 export default function Map() {
   const position: [number, number] = [46.5, 12.0]; 
   
-  // Stato per i dati del sentiero (GeoJSON)
   const [sentieroData, setSentieroData] = useState<any>(null);
   
-  // Stato per la visibilità della lista percorsi
   const [isListOpen, setIsListOpen] = useState(false);
 
   useDocumentTitle("Map - HikeNest");
@@ -26,7 +24,7 @@ export default function Map() {
 
         <button 
             onClick={() => setIsListOpen(true)}
-            className="absolute top-28 left-35 z-[1001] bg-white text-mine-shaft-950 border border-gray-300 rounded-lg px-60 py-4 hover:bg-gray-50 shadow-lg font-semibold transition-all flex items-center gap-2"
+            className="absolute top-28 left-35 z-1001 bg-white text-mine-shaft-950 border border-gray-300 rounded-lg px-60 py-4 hover:bg-gray-50 shadow-lg font-semibold transition-all flex items-center gap-2"
         >
             <span className="text-xl"></span> Lista dei percorsi
         </button>

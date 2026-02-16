@@ -67,8 +67,8 @@ export default function Ricerca({ onResultFound, onClear }: RicercaProps) {
   };
 
   const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault(); // Blocca il refresh della pagina
-    searchPlace(query); // Chiama la funzione pura usando il testo dell'input
+    e.preventDefault(); 
+    searchPlace(query);
   };
 
   const handleClear = () => {
@@ -78,9 +78,9 @@ export default function Ricerca({ onResultFound, onClear }: RicercaProps) {
   };
 
   const handleSelectSuggestion = (suggestion: Suggestion) => {
-    setQuery(suggestion.display_name); // Aggiorna l'input con il nome completo
-    setSuggestions([]); // Nascondi la lista
-    searchPlace(suggestion.display_name); // Lancia la ricerca vera per ottenere il GeoJSON/Poligono
+    setQuery(suggestion.display_name); 
+    setSuggestions([]); 
+    searchPlace(suggestion.display_name); 
   };
 
 
@@ -121,7 +121,7 @@ export default function Ricerca({ onResultFound, onClear }: RicercaProps) {
                 key={suggestion.place_id}
                 onClick={() => handleSelectSuggestion(suggestion)}
                 className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm text-gray-800 border-b border-gray-100 last:border-none truncate"
-                title={suggestion.display_name} // Tooltip se il nome è troppo lungo
+                title={suggestion.display_name}
               >
                 {suggestion.display_name}
               </li>
