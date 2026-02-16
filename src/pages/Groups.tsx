@@ -240,7 +240,7 @@ function Groups() {
                                             {g.descrizione || "Nessuna descrizione."}
                                         </p>
                                     </div>
-                                    <div className="mt-auto p-4 bg-gray-50 border-t flex justify-center ">
+                                    <div className="mt-auto p-4 bg-gray-50 border-t flex justify-center rounded-b-2xl">
                                         <button 
                                             onClick={() => setSelectedGroupId(g.id)} 
                                             className="text-mine-shaft-950 font-bold hover:tracking-widest transition-all"
