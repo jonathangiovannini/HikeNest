@@ -16,8 +16,8 @@ interface Gruppo {
     descrizione: string;
 }
 interface Percorso {
-    id: string;   // Qui salveremo l'ID estratto
-    self: string; // Qui terremo l'URL completo
+    id: string;  
+    self: string; 
     nome: string;
 }
 
@@ -29,8 +29,8 @@ const UserGroups: React.FC = () => {
     const apiUrl = import.meta.env.VITE_API_URL;
 
     const [percorsi, setPercorsi] = useState<Percorso[]>([]);
+    
     const getNomePercorso = (idPercorsoDelGruppo: string) => {
-        // Estraiamo l'ID nel caso idPercorso fosse un URL intero
         const idPulito = idPercorsoDelGruppo.split('/').filter(Boolean).pop();
         const percorsoTrovato = percorsi.find(p => p.id === idPulito);
         return percorsoTrovato ? percorsoTrovato.nome : "Caricamento percorso...";
@@ -49,17 +49,14 @@ const UserGroups: React.FC = () => {
             if (response.ok) {
                 const rawData = await response.json();
                 
-                // --- MODIFICA QUI ---
-                // Trasformiamo i dati per estrarre l'ID da 'self'
+
                 const processedData = rawData.map((item: any) => {
-                    // Divide la stringa per '/' e prende l'ultimo elemento non vuoto
-                    // Es: "/api/v1/percorsi/123" -> ["api", "v1", "percorsi", "123"] -> "123"
                     const extractedId = item.self.split('/').filter(Boolean).pop();
                     
                     return {
                         ...item,
-                        id: extractedId, // Sovrascriviamo l'id con quello estratto dall'URL
-                        self: item.self  // Manteniamo il self originale
+                        id: extractedId, 
+                        self: item.self  
                     };
                 });
                 
@@ -111,18 +108,15 @@ const UserGroups: React.FC = () => {
 
     if (loading) return <div className="text-center py-10">Caricamento dei tuoi gruppi...</div>;
 
-    // --- ERRORE ERA QUI: L'avevi messo fuori dal return ---
     
     return (
-        <section className="w-full relative"> {/* Aggiunto relative per sicurezza */}
+        <section className="w-full relative"> 
             <Navbar/>
             
-            {/* --- CORREZIONE: Ora è qui dentro, quindi React lo mostrerà --- */}
             <DettagliGruppo
                 groupId={selectedGroupId} 
                 onClose={() => setSelectedGroupId(null)} 
             />
-            {/* ----------------------------------------------------------- */}
 
             <h2 className="text-2xl font-bold text-mine-shaft-950 mb-6 text-center mt-6">My Hikes</h2>
             
