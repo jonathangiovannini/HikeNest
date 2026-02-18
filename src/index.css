@@ -44,11 +44,11 @@ html, body{
 @keyframes slideFadeIn {
     from {
         opacity: 0;
-        transform: translateY(20px); /* Parte 20px più in basso */
+        transform: translateY(20px);
     }
     to {
         opacity: 1;
-        transform: translateY(0); /* Arriva nella posizione originale */
+        transform: translateY(0);
     }
 }
 
