@@ -47,7 +47,6 @@ function Groups() {
     const apiUrl = import.meta.env.VITE_API_URL;
 
     const getNomePercorso = (idPercorsoDelGruppo: string) => {
-        // Estraiamo l'ID nel caso idPercorso fosse un URL intero
         const idPulito = idPercorsoDelGruppo.split('/').filter(Boolean).pop();
         const percorsoTrovato = percorsi.find(p => p.id === idPulito);
         return percorsoTrovato ? percorsoTrovato.nome : "Caricamento percorso...";
